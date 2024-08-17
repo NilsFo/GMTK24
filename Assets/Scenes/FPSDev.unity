@@ -484,6 +484,64 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 352511811}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &408422354
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6933698576062011, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.354002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933698576062011, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933698576062011, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20.59279
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933698576062011, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933698576062011, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933698576062011, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933698576062011, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933698576062011, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933698576062011, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933698576062011, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276878591304861626, guid: 0ff6a3b8824659341b8ae7ca18e2bc63,
+        type: 3}
+      propertyPath: m_Name
+      value: Group-Tetris-Ladder
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0ff6a3b8824659341b8ae7ca18e2bc63, type: 3}
 --- !u!1001 &638421824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2004,3 +2062,4 @@ SceneRoots:
   - {fileID: 1750699426}
   - {fileID: 1586529524}
   - {fileID: 1019149213}
+  - {fileID: 408422354}
