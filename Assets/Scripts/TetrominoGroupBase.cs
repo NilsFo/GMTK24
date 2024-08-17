@@ -56,5 +56,16 @@ public class TetrominoGroupBase : MonoBehaviour
         targetPos = pos;
         _state = State.Moving;
     }
+
+    public void RotateRight()
+    {
+        var euler = transform.rotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(euler.x, euler.y+90, euler.z);
+    }
     
+    public void RotateLeft()
+    {
+        var euler = transform.rotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(euler.x, euler.y-90, euler.z);
+    }
 }
