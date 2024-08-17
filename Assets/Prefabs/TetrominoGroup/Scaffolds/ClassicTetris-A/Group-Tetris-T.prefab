@@ -243,6 +243,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Group-Tetris-T
       objectReference: {fileID: 0}
+    - target: {fileID: 4843150461464693666, guid: fc52a95fa13221c4b88024e5bbde2aaf,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5608897651804832831, guid: fc52a95fa13221c4b88024e5bbde2aaf,
         type: 3}
       propertyPath: m_LocalPosition.x
