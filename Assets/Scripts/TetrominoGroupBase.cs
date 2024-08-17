@@ -162,7 +162,7 @@ public class TetrominoGroupBase : MonoBehaviour
         Vector3[] result = new Vector3[shapeBlocks.Length];
         for (int i = 0; i < shapeBlocks.Length; i++)
         {
-            result[i] = shapeBlocks[i].transform.localPosition;
+            result[i] = shapeBlocks[i].transform.position - transform.position;
         }
         return result;
     }

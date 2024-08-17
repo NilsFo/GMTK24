@@ -23,6 +23,8 @@ public class Crane : MonoBehaviour {
     public CraneState craneState;
     public TetrominoGroupBase grabbedTile;
 
+    private int _grabbedTileRotation = 0;
+
     
     // Start is called before the first frame update
     void Start()
@@ -116,6 +118,9 @@ public class Crane : MonoBehaviour {
                 grabbedTile = tetromino;
                 grabbedTile.transform.parent = transform;
                 grabbedTile.transform.localPosition = new Vector3(0, -3, 0);  // TODO correct for anchor pos & animate
+
+                _grabbedTileRotation = 0;
+                
                 Debug.Log("Grabbed piece " + grabbedTile.gameObject.name, grabbedTile);
             } else {
                 Debug.Log("Can't grab!");
@@ -136,6 +141,11 @@ public class Crane : MonoBehaviour {
         }
     }
 
+    public void Rotate() {
+        if(HasGrabbedTile())
+            grabbedTile.RotateRight();
+    }
+
     public bool HasGrabbedTile() {
         return grabbedTile != null;
     }
@@ -153,6 +163,13 @@ public class Crane : MonoBehaviour {
                 SetTargetPos(gridPos.x, gridPos.y + 1);
             } else if (k.downArrowKey.wasPressedThisFrame) {
                 SetTargetPos(gridPos.x, gridPos.y - 1);
+            }
+        }
+        
+        // Rotate
+        if (craneState is CraneState.IDLE or CraneState.MOVING) {
+            if (k.rKey.wasPressedThisFrame) {
+                Rotate();
             }
         }
 
