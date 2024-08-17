@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 614386294540815664, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 614386294540815664, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
@@ -121,7 +121,7 @@ PrefabInstance:
     - target: {fileID: 614386294540815664, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 614386294540815664, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
@@ -233,6 +233,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Group-Tetris-S
       objectReference: {fileID: 0}
+    - target: {fileID: 4843150461464693666, guid: fc52a95fa13221c4b88024e5bbde2aaf,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5608897651804832831, guid: fc52a95fa13221c4b88024e5bbde2aaf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -326,7 +331,7 @@ PrefabInstance:
     - target: {fileID: 614386294540815664, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 614386294540815664, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
@@ -466,7 +471,7 @@ PrefabInstance:
     - target: {fileID: 614386294540815664, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 614386294540815664, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
