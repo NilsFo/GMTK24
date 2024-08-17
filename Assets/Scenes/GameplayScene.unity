@@ -473,9 +473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 395d8450737fb0a429d6331fbdb169aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 10
-  sizeY: 10
-  sizeZ: 10
+  sizeX: 5
+  sizeY: 5
+  sizeZ: 5
   blockScaleX: 3
   blockScaleY: 3
   blockScaleZ: 3
