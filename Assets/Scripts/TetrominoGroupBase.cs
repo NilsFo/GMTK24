@@ -18,7 +18,14 @@ public class TetrominoGroupBase : MonoBehaviour
     }
     
     private Grid3D _grid;
+
     
+    [Header("General Parameters")][SerializeField]
+    private Tetromino.TetrominoType tetrominoType;
+    public Tetromino.TetrominoType Type => tetrominoType;
+    
+    
+    [Header("Grid Behaviour")]
     [SerializeField] private State _state = State.Spawned;
     
     [SerializeField] private GameObject anchorPoints;

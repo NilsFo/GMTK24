@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5608897651804832831}
   - component: {fileID: 6575392038611086360}
   m_Layer: 0
-  m_Name: TetrominoGroupBase
+  m_Name: TetrominoGroupBaseScaffold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bee310f0073eae43983b31d5756aa26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tetrominoType: 1
   _state: 0
   anchorPoints: {fileID: 0}
   bottemPoints: {fileID: 0}
@@ -52,3 +53,4 @@ MonoBehaviour:
   currentIndex: {x: 0, y: 0, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  anchorOffset: {x: 0, y: 0, z: 0}
