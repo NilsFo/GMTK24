@@ -236,9 +236,9 @@ public class CharacterMovement : MonoBehaviour
             velocity = _ladderNormal;
             _isOnLadder = false;
         }
-        /*if (_controller.isGrounded) {
+        if (_controller.isGrounded && velocity.y < -1) {
             _isOnLadder = false;
-        }*/
+        }
     }
 
     private Vector3 GetNormalBelow() {
