@@ -20,12 +20,6 @@ public class WeldPoint : MonoBehaviour
         renderer.material.color = Color.red;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Weld() {
         if (connectedWeld != null && weldState == WeldState.CAN_WELD && connectedWeld.weldState == WeldState.CAN_WELD) {
             //TODO Check if there is a different weld point opposite of this one
