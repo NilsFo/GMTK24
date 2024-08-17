@@ -40,8 +40,11 @@ public class Welder : MonoBehaviour
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
             var weldPoint = hit.collider.gameObject.GetComponent<WeldPoint>();
             if (weldPoint != null) {
-                weldPoint.Weld();
                 Debug.Log("Weld Point found");
+                if(weldPoint.weldState == WeldPoint.WeldState.CAN_WELD)
+                    weldPoint.Weld();
+                else if(weldPoint.weldState == WeldPoint.WeldState.WELDED)
+                    weldPoint.Unweld();
             } else {
                 Debug.Log("Not a Weld Point");
             }
