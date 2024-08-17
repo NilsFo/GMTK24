@@ -34,7 +34,10 @@ public class TetrominoGroupBase : MonoBehaviour
     }
 
     private Grid3D _grid;
-
+    
+    public static float moveSpeed = 15f;
+    public static float rotationSpeed = 180f;
+    
     public bool isStatic = false;
     
     [Header("General Parameters")][SerializeField]
@@ -51,15 +54,13 @@ public class TetrominoGroupBase : MonoBehaviour
     [SerializeField] private GameObject[] shapeBlocks;
 
     [SerializeField] private GameObject anchorePoint;
-        
-    [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float rotationSpeed = 3f;
 
     [SerializeField] private Vector3Int currentIndex;
     [SerializeField] private Vector3Int lastValidIndex;
 
     [SerializeField] private Vector3 targetPos;
-
+    [SerializeField] private Quaternion targetRotation;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -168,6 +169,19 @@ public class TetrominoGroupBase : MonoBehaviour
             }
 
         }
+        else if(_state == State.Rotating)
+        {
+            float diff = Quaternion.Angle(transform.rotation, targetRotation);
+            if (diff < 0.1f)
+            {
+                transform.rotation = targetRotation;
+                _state = State.Grabbed;
+            }
+            else
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+        }
     }
 
     public Vector3[] GetShapeCenterPoints()
@@ -205,20 +219,11 @@ public class TetrominoGroupBase : MonoBehaviour
         if (_state == State.Grabbed)
         {
             var euler = transform.rotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(euler.x, euler.y + 90, euler.z);
-            _state = State.Grabbed;
-        }
-    }
-
-    public void RotateLeft()
-    {
-        if (_state == State.Grabbed)
-        {
-            var euler = transform.rotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(euler.x, euler.y - 90, euler.z);
+            targetRotation = Quaternion.Euler(euler.x, euler.y + 90, euler.z);
             _state = State.Rotating;
         }
     }
+    
     public bool DropPiece() {
         if (_state == State.Grabbed && _grid.IsInsideDropZone(transform.position)) {
             Vector3Int[] centerIndexes = _grid.ConvertToLocal(GetShapeCenterPoints());
