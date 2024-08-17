@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GameState : MonoBehaviour
 {
+
+
+
+    public List<Material> tetrominoScafoldingMaterials;
+
     // Start is called before the first frame update
     void Start()
     {

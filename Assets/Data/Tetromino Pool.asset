@@ -64,3 +64,27 @@ MonoBehaviour:
   - tetromino: {fileID: 1625254809229262364, guid: 81dcacd3586c9ae46a15c1a3a98eb136,
       type: 3}
     weight: 4
+  - tetromino: {fileID: 1625254809229262364, guid: f4ccac9e3fd356749a39c62e20d2f9f4,
+      type: 3}
+    weight: 4
+  - tetromino: {fileID: 1625254809229262364, guid: dd8c04dbc48bfd24dba0db0f7db0a172,
+      type: 3}
+    weight: 4
+  - tetromino: {fileID: 1625254809229262364, guid: b722b376950bd2545818797503023ec5,
+      type: 3}
+    weight: 4
+  - tetromino: {fileID: 1625254809229262364, guid: 7582da3a3f497844f9a677fc7d90b334,
+      type: 3}
+    weight: 4
+  - tetromino: {fileID: 1625254809229262364, guid: 772fed93568bfc0499ed137236c64d2b,
+      type: 3}
+    weight: 4
+  - tetromino: {fileID: 1625254809229262364, guid: 458f88da3dc18d9458866c8b3d6f86ef,
+      type: 3}
+    weight: 4
+  - tetromino: {fileID: 1625254809229262364, guid: a62d8477c9b9ef442a95b75773a4771a,
+      type: 3}
+    weight: 4
+  - tetromino: {fileID: 1625254809229262364, guid: 0ff6a3b8824659341b8ae7ca18e2bc63,
+      type: 3}
+    weight: 6
