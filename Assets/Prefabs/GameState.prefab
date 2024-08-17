@@ -45,6 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80642af5ab8ec7c46ada7067b4f641fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tetrominoScafoldingMaterials:
+  - {fileID: 2100000, guid: c618425f24b41b742a9154e182389d10, type: 2}
+  - {fileID: 2100000, guid: 0d2947575bd78274c8d81ff5955f1461, type: 2}
+  - {fileID: 2100000, guid: e6f147f17d77cdb419980a29ec765036, type: 2}
+  - {fileID: 2100000, guid: d3279fd7a4ae66849ab1f36b27761681, type: 2}
+  - {fileID: 2100000, guid: 3c45964e006b9df4ab135d8839df8339, type: 2}
+  - {fileID: 2100000, guid: 0802f0394a6f704449b1adec0561ec9a, type: 2}
+  - {fileID: 2100000, guid: 57d1131df38a1304d94752a5f2a9df3d, type: 2}
 --- !u!114 &8714150335718117701
 MonoBehaviour:
   m_ObjectHideFlags: 0
