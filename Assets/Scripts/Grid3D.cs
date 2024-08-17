@@ -13,6 +13,10 @@ public class Grid3D : MonoBehaviour
     [SerializeField] private int sizeY = 10;
     [SerializeField] private int sizeZ = 10;
 
+    [SerializeField] private int bufferX = 3;
+    [SerializeField] private int bufferY = 3;
+    [SerializeField] private int bufferZ = 3;
+    
     [SerializeField] private float blockScaleX = 3f;
     [SerializeField] private float blockScaleY = 3f;
     [SerializeField] private float blockScaleZ = 3f;
@@ -118,5 +122,13 @@ public class Grid3D : MonoBehaviour
             _grid[indexes[i].x, indexes[i].y, indexes[i].z] = shape;
         }
         return true;
+    }
+
+    public void RemoveShape(Vector3Int[] indexes)
+    {
+        for (int i = 0; i < indexes.Length; i++)
+        {
+            _grid[indexes[i].x, indexes[i].y, indexes[i].z] = null;
+        }
     }
 }

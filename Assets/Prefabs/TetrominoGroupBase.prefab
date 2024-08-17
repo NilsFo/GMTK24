@@ -44,3 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bee310f0073eae43983b31d5756aa26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state: 0
+  anchorPoints: {fileID: 0}
+  bottemPoints: {fileID: 0}
+  moveSpeed: 5
+  rotationSpeed: 45
+  currentIndex: {x: 0, y: 0, z: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  targetRotation: {x: 0, y: 0, z: 0, w: 0}
