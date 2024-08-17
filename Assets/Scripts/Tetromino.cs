@@ -10,6 +10,9 @@ public class Tetromino : MonoBehaviour
         House, Scaffold
     }
 
+    
+    
+
     [SerializeField]
     private TetrominoType tetrominoType;
     public TetrominoType Type => tetrominoType;
