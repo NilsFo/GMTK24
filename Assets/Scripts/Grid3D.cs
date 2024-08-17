@@ -134,7 +134,6 @@ public class Grid3D : MonoBehaviour
         for (int i = 0; i < indexes.Length; i++)
         {
             _grid[indexes[i].x, indexes[i].y, indexes[i].z] = shape;
-            Debug.Log("Inserting block into " + indexes[i]);
         }
         return true;
     }
