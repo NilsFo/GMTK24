@@ -50,6 +50,8 @@ public class TetrominoGroupBase : MonoBehaviour
 
     [SerializeField] private GameObject[] shapeBlocks;
 
+    [SerializeField] private GameObject anchorePoint;
+        
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float rotationSpeed = 3f;
 
@@ -231,9 +233,11 @@ public class TetrominoGroupBase : MonoBehaviour
         return false;
     }
 
-    public bool IsGrabable()
-    {
-        if (_state == State.Placed && !isStatic)
+    public bool IsGrabable() {
+        if (isStatic)
+            return false;
+        
+        if (_state == State.Placed)
         {
             Vector3Int[] centerIndexes = _grid.ConvertToLocal(GetShapeCenterPoints());
             for (int i = 0; i < centerIndexes.Length; i++)
@@ -259,10 +263,16 @@ public class TetrominoGroupBase : MonoBehaviour
         _state = State.Grabbed;
         return this;
     }
+
     public float GetBlockHeight() {
         var centerPoints = GetShapeCenterPoints();
         var maxHeight = centerPoints.Max(c => c.y);
         var minHeight = centerPoints.Min(c => c.y);
         return maxHeight - minHeight + 3;
+    }
+
+    public GameObject GetAnchorPoint()
+    {
+        return anchorePoint;
     }
 }
