@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GameplayScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/KranDev.unity
+    path: Assets/Scenes/GameplayScene.unity
     guid: 0c4b4f43db1f8b2468a80a14a6f91658
   - enabled: 1
     path: Assets/Scenes/End Scene.unity
