@@ -21,6 +21,7 @@ public class TetrominoGroupBase : MonoBehaviour
     
     private Grid3D _grid;
 
+    public bool isStatic = false;
     
     [Header("General Parameters")][SerializeField]
     private Tetromino.TetrominoType tetrominoType;
@@ -121,7 +122,6 @@ public class TetrominoGroupBase : MonoBehaviour
                 }
             
                 bool canBePlaced = _grid.CanBePlaced(centerIndexes);
-                Debug.Log("CanBePlaced:" + canBePlaced);
                 if (canBePlaced)
                 {
                     lastValidIndex = nextIndex;
@@ -193,5 +193,34 @@ public class TetrominoGroupBase : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public bool IsGrapabel()
+    {
+        if (_state == State.Placed && !isStatic)
+        {
+            Vector3Int[] centerIndexes = _grid.ConvertToLocal(GetShapeCenterPoints());
+            for (int i = 0; i < centerIndexes.Length; i++)
+            {
+                var cell = _grid.GetHighestCell(new Vector2Int(centerIndexes[i].x, centerIndexes[i].z));
+                if (cell != null && cell != this)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public TetrominoGroupBase GrabPiece()
+    {
+        if (!IsGrapabel())
+        {
+            return null;
+        }
+        Vector3Int[] currentCenterPointsOnGrid = _grid.ConvertToLocal(GetShapeCenterPoints());
+        _grid.RemoveShape(currentCenterPointsOnGrid);
+        _state = State.Grabbed;
+        return this;
     }
 }

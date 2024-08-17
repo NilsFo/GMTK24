@@ -154,6 +154,32 @@ public class Grid3D : MonoBehaviour
     {
         return new Vector3(blockScaleX, blockScaleY, blockScaleZ);
     }
+
+    public Vector3 GetHighestEmptyCell(Vector2Int index)
+    {
+        for (int i = sizeY-1; i >= 0; i--)
+        {
+            TetrominoGroupBase cell = _grid[index.x, i, index.y];
+            if (cell != null)
+            {
+                return LocalToWorld(new Vector3Int(index.x, i+1, index.y));
+            }
+        }
+        return LocalToWorld(new Vector3Int(index.x,0,index.y));
+    }
+    
+    public TetrominoGroupBase GetHighestCell(Vector2Int index)
+    {
+        for (int i = sizeY-1; i >= 0; i--)
+        {
+            TetrominoGroupBase cell = _grid[index.x, i, index.y];
+            if (cell != null)
+            {
+                return cell;
+            }
+        }
+        return null;
+    }
     
     [Obsolete]
     public Bounds ToBounds()
