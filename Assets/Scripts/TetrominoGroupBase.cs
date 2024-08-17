@@ -32,7 +32,8 @@ public class TetrominoGroupBase : MonoBehaviour
     [SerializeField] public State _state = State.Spawned;
     
     [SerializeField] private GameObject[] shapeBlocks;
-    
+    [SerializeField] private GameObject anchorePoint;
+        
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float rotationSpeed = 3f;
     
@@ -227,5 +228,10 @@ public class TetrominoGroupBase : MonoBehaviour
         _grid.RemoveShape(currentCenterPointsOnGrid);
         _state = State.Grabbed;
         return this;
+    }
+
+    public GameObject GetAnchorPoint()
+    {
+        return anchorePoint;
     }
 }
