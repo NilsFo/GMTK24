@@ -236,9 +236,13 @@ public class TetrominoGroupBase : MonoBehaviour
     public bool IsGrabable() {
         if (isStatic)
             return false;
+
         
         if (_state == State.Placed)
         {
+            if (IsWelded())
+                return false;
+            
             Vector3Int[] centerIndexes = _grid.ConvertToLocal(GetShapeCenterPoints());
             for (int i = 0; i < centerIndexes.Length; i++)
             {
@@ -250,6 +254,11 @@ public class TetrominoGroupBase : MonoBehaviour
             }
         }
         return true;
+    }
+
+    public bool IsWelded() {
+        var welds = GetComponentsInChildren<WeldPoint>();
+        return welds.Any(w => w.weldState == WeldPoint.WeldState.WELDED);
     }
 
     public TetrominoGroupBase GrabPiece()
