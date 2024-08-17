@@ -477,7 +477,6 @@ MonoBehaviour:
   sizeY: 5
   sizeZ: 5
   bufferX: 3
-  bufferY: 3
   bufferZ: 3
   blockScaleX: 3
   blockScaleY: 3

@@ -18,28 +18,44 @@ public class TetrominoGroupBase : MonoBehaviour
         Welded,
         Faulty
     }
-    
+
+
+    public enum TetrominoGroupType
+    {
+        Unknown,
+        I,
+        L,
+        O,
+        T,
+        S,
+        Special
+    }
+
     private Grid3D _grid;
 
-    
-    [Header("General Parameters")][SerializeField]
+
+    [Header("General Parameters")]
+    [SerializeField]
     private Tetromino.TetrominoType tetrominoType;
+    [SerializeField]
+    private TetrominoGroupType tetrominoGroupType=TetrominoGroupType.Unknown;
     public Tetromino.TetrominoType Type => tetrominoType;
-    
-    
+    public TetrominoGroupType GroupType => tetrominoGroupType;
+
+
     [Header("Grid Behaviour")]
     [SerializeField] public State _state = State.Spawned;
-    
+
     [SerializeField] private GameObject[] shapeBlocks;
-    
+
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float rotationSpeed = 3f;
-    
+
     [SerializeField] private Vector3Int currentIndex;
     [SerializeField] private Vector3Int lastValidIndex;
-    
+
     [SerializeField] private Vector3 targetPos;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +67,11 @@ public class TetrominoGroupBase : MonoBehaviour
         }
         currentIndex = _grid.WorldToLocal(transform.position);
         lastValidIndex = currentIndex;
+
+        if (tetrominoType==Tetromino.TetrominoType.House)
+        {
+            tetrominoGroupType=TetrominoGroupType.Unknown;
+        }
     }
 
     // Update is called once per frame
@@ -60,11 +81,11 @@ public class TetrominoGroupBase : MonoBehaviour
         {
             MoveToPos(targetPos);
         }
-        
+
         if (_state == State.Moving)
         {
             float dist = Vector3.Distance(transform.position, targetPos);
-            
+
             if (dist < 0.1f)
             {
                 _state = State.Placed;
@@ -79,12 +100,12 @@ public class TetrominoGroupBase : MonoBehaviour
                 currentIndex = _grid.WorldToLocal(transform.position);
             }
         }
-        else if(_state == State.Spawned)
+        else if (_state == State.Spawned)
         {
             bool inGrid = _grid.IsInsideDropZone(transform.position);
             if (!inGrid)
             {
-                Debug.LogError(""+ gameObject.name + " is not inside Grid!");
+                Debug.LogError("" + gameObject.name + " is not inside Grid!");
                 _state = State.Faulty;
             }
             else
@@ -93,7 +114,8 @@ public class TetrominoGroupBase : MonoBehaviour
                 _grid.PlaceShape(this, result);
                 _state = State.Placed;
             }
-        } else if (_state == State.Drop)
+        }
+        else if (_state == State.Drop)
         {
             Vector3Int nextIndex;
             if (currentIndex.y - 1 < 0)
@@ -119,7 +141,7 @@ public class TetrominoGroupBase : MonoBehaviour
                         centerIndexes[i] = new Vector3Int(centerIndexes[i].x, centerIndexes[i].y - 1, centerIndexes[i].z);
                     }
                 }
-            
+
                 bool canBePlaced = _grid.CanBePlaced(centerIndexes);
                 Debug.Log("CanBePlaced:" + canBePlaced);
                 if (canBePlaced)
@@ -130,7 +152,7 @@ public class TetrominoGroupBase : MonoBehaviour
 
             Vector3 nextPos = _grid.LocalToWorld(lastValidIndex);
             float dist = Vector3.Distance(transform.position, nextPos);
-            
+
             if (dist < 0.1f)
             {
                 _state = State.Placed;
@@ -144,7 +166,7 @@ public class TetrominoGroupBase : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, nextPos, moveSpeed * Time.deltaTime);
                 currentIndex = _grid.WorldToLocal(transform.position);
             }
-            
+
         }
     }
 
@@ -157,7 +179,7 @@ public class TetrominoGroupBase : MonoBehaviour
         }
         return result;
     }
-    
+
     public void MoveToPos(Vector3 pos)
     {
         if (_state == State.Grabbed)
@@ -172,22 +194,24 @@ public class TetrominoGroupBase : MonoBehaviour
         if (_state == State.Grabbed)
         {
             var euler = transform.rotation.eulerAngles;
-            transform.rotation =  Quaternion.Euler(euler.x, euler.y+90, euler.z);
+            transform.rotation = Quaternion.Euler(euler.x, euler.y + 90, euler.z);
             _state = State.Grabbed;
         }
     }
-    
+
     public void RotateLeft()
     {
         if (_state == State.Grabbed)
         {
             var euler = transform.rotation.eulerAngles;
-            transform.rotation =  Quaternion.Euler(euler.x, euler.y-90, euler.z);
+            transform.rotation = Quaternion.Euler(euler.x, euler.y - 90, euler.z);
             _state = State.Rotating;
         }
     }
-    public bool DropPiece() {
-        if (_state == State.Grabbed) {
+    public bool DropPiece()
+    {
+        if (_state == State.Grabbed)
+        {
             _state = State.Drop;
             currentIndex = _grid.WorldToLocal(transform.position);
             return true;
