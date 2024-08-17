@@ -5,9 +5,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Crane : MonoBehaviour {
+    public Grid3D grid;
+    public TetrominoSpawner tetroSpawner;
+    
     public float yLevel = 10f;
     public Vector2Int gridPos;
-    public Grid3D grid;
 
     public float speed = 1f;
 
@@ -40,6 +42,19 @@ public class Crane : MonoBehaviour {
             if(Vector3.Distance(transform.localPosition, targetPos) < 0.01f) {
                 craneState = CraneState.IDLE;
             } else {
+                craneState = CraneState.MOVING;
+            }
+        }
+
+        else if (craneState is CraneState.NEW_TILE) {
+            var targetPos = tetroSpawner.transform.position;
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPos, speed * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, targetPos) < 0.01f) {
+                grabbedTile = tetroSpawner.Next().GetComponent<TetrominoGroupBase>();
+                grabbedTile.transform.parent = transform;
+                grabbedTile.transform.localPosition = new Vector3(0, -3, 0);  // TODO correct for anchor pos
+                
                 craneState = CraneState.MOVING;
             }
         }
@@ -93,6 +108,13 @@ public class Crane : MonoBehaviour {
                 } else {
                     Grab();
                 }
+            }
+        }
+        
+        // Get Scaffold
+        if (k.qKey.wasPressedThisFrame) {
+            if (craneState is CraneState.IDLE or CraneState.MOVING && !HasGrabbedTile()) {
+                craneState = CraneState.NEW_TILE;
             }
         }
     }
