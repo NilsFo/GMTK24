@@ -53,6 +53,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 3c45964e006b9df4ab135d8839df8339, type: 2}
   - {fileID: 2100000, guid: 0802f0394a6f704449b1adec0561ec9a, type: 2}
   - {fileID: 2100000, guid: 57d1131df38a1304d94752a5f2a9df3d, type: 2}
+  gameplayUI: {fileID: 0}
+  winUI: {fileID: 0}
+  pauseUI: {fileID: 0}
+  scaffoldingOutlineSolid: 0
+  currentPlayerState: 1
 --- !u!114 &8714150335718117701
 MonoBehaviour:
   m_ObjectHideFlags: 0
