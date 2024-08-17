@@ -26,8 +26,9 @@ public class Crane : MonoBehaviour {
     
     // Start is called before the first frame update
     void Start()
-    {            
+    {
         var targetPos = grid.LocalToWorld(new Vector3Int(gridPos.x, 0, gridPos.y));
+        
         targetPos.y = yLevel;
         transform.localPosition = targetPos;
     }
@@ -39,9 +40,9 @@ public class Crane : MonoBehaviour {
         if (craneState is CraneState.IDLE or CraneState.MOVING) {
             var targetPos = grid.LocalToWorld(new Vector3Int(gridPos.x, 0, gridPos.y));
             targetPos.y = yLevel;
-            transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPos, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
             
-            if(Vector3.Distance(transform.localPosition, targetPos) < 0.01f) {
+            if(Vector3.Distance(transform.position, targetPos) < 0.01f) {
                 craneState = CraneState.IDLE;
             } else {
                 craneState = CraneState.MOVING;
@@ -73,6 +74,23 @@ public class Crane : MonoBehaviour {
         if (pos.x >= 0 && pos.x < gridSize.x && pos.y >= 0 && pos.y < gridSize.y) {
             gridPos.x = pos.x;
             gridPos.y = pos.y;
+
+            if (grabbedTile != null) {
+                
+                var blockHeight = grabbedTile.GetBlockHeight();
+                var height = 0f;
+                var centerpoints = grabbedTile.GetLocalShapeCenterPoints();
+                foreach (var centerpoint in centerpoints) {
+                    var c = grid.WorldToLocal(centerpoint + grid.LocalToWorld(new Vector3Int(gridPos.x, 0, gridPos.y)));
+                    height = Mathf.Max(
+                        height, 
+                        grid.GetHighestEmptyCell(new Vector2Int(c.x, c.z)).y
+                    );
+                }
+                yLevel = height + blockHeight + 4;
+            } else {
+                yLevel = grid.GetHighestEmptyCell(gridPos).y + 4;
+            }
         }
     }
 
@@ -87,7 +105,24 @@ public class Crane : MonoBehaviour {
     }
 
     public void Grab() {
-        // TODO
+        if (craneState != CraneState.IDLE || HasGrabbedTile())
+            return;
+        
+        var tetromino = grid.GetHighestCell(gridPos);
+        if (tetromino != null) {
+            Debug.Log("Grabbing " + tetromino.gameObject.name, tetromino);
+            tetromino = tetromino.GrabPiece();
+            if (tetromino != null) {
+                grabbedTile = tetromino;
+                grabbedTile.transform.parent = transform;
+                grabbedTile.transform.localPosition = new Vector3(0, -3, 0);  // TODO correct for anchor pos & animate
+                Debug.Log("Grabbed piece " + grabbedTile.gameObject.name, grabbedTile);
+            } else {
+                Debug.Log("Can't grab!");
+            }
+        } else {
+            Debug.Log("Can't grab at " + gridPos);
+        }
     }
 
     public void Drop() {

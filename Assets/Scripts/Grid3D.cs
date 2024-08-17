@@ -134,6 +134,7 @@ public class Grid3D : MonoBehaviour
         for (int i = 0; i < indexes.Length; i++)
         {
             _grid[indexes[i].x, indexes[i].y, indexes[i].z] = shape;
+            Debug.Log("Inserting block into " + indexes[i]);
         }
         return true;
     }
@@ -228,6 +229,7 @@ public class Grid3D : MonoBehaviour
                         TetrominoGroupBase thing = _grid[x, y, z];
                         if (thing == null)
                         {
+                            continue;
                             Gizmos.color = Color.red;
                         }
                         else

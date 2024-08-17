@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.UI;
 using UnityEngine;
 
@@ -45,11 +47,8 @@ public class TetrominoGroupBase : MonoBehaviour
     void Start()
     {
         _grid = FindObjectOfType<Grid3D>();
-        shapeBlocks = new GameObject[transform.childCount];
-        for (int i = 0; i < shapeBlocks.Length; i++)
-        {
-            shapeBlocks[i] = transform.GetChild(i).gameObject;
-        }
+        shapeBlocks = transform.GetComponentsInChildren<Tetromino>().Select(t => t.gameObject).ToArray();
+        
         currentIndex = _grid.WorldToLocal(transform.position);
         lastValidIndex = currentIndex;
     }
@@ -158,6 +157,16 @@ public class TetrominoGroupBase : MonoBehaviour
         return result;
     }
     
+    public Vector3[] GetLocalShapeCenterPoints()
+    {
+        Vector3[] result = new Vector3[shapeBlocks.Length];
+        for (int i = 0; i < shapeBlocks.Length; i++)
+        {
+            result[i] = shapeBlocks[i].transform.localPosition;
+        }
+        return result;
+    }
+    
     public void MoveToPos(Vector3 pos)
     {
         if (_state == State.Grabbed)
@@ -195,7 +204,7 @@ public class TetrominoGroupBase : MonoBehaviour
         return false;
     }
 
-    public bool IsGrapabel()
+    public bool IsGrabable()
     {
         if (_state == State.Placed && !isStatic)
         {
@@ -214,7 +223,7 @@ public class TetrominoGroupBase : MonoBehaviour
 
     public TetrominoGroupBase GrabPiece()
     {
-        if (!IsGrapabel())
+        if (!IsGrabable())
         {
             return null;
         }
@@ -222,5 +231,11 @@ public class TetrominoGroupBase : MonoBehaviour
         _grid.RemoveShape(currentCenterPointsOnGrid);
         _state = State.Grabbed;
         return this;
+    }
+    public float GetBlockHeight() {
+        var centerPoints = GetShapeCenterPoints();
+        var maxHeight = centerPoints.Max(c => c.y);
+        var minHeight = centerPoints.Min(c => c.y);
+        return maxHeight - minHeight + 3;
     }
 }
