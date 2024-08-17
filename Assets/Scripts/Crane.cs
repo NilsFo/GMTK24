@@ -50,7 +50,7 @@ public class Crane : MonoBehaviour {
 
         else if (craneState is CraneState.NEW_TILE) {
             var targetPos = tetroSpawner.transform.position;
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime * 5);
 
             if (Vector3.Distance(transform.position, targetPos) < 0.01f) {
                 GrabNewScaffold();
