@@ -54,9 +54,7 @@ public class TetrominoGroupBase : MonoBehaviour
     [SerializeField] private GameObject[] shapeBlocks;
 
     [SerializeField] private GameObject anchorePoint;
-        
-    [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float rotationSpeed = 3f;
+    
     [SerializeField] private float dropVelocity = 10f;
 
     [SerializeField] private Vector3Int currentIndex;
