@@ -119,4 +119,8 @@ public class Grid3D : MonoBehaviour
         }
         return true;
     }
+
+    public Vector3Int GetSize() {
+        return new Vector3Int(sizeX, sizeY, sizeZ);
+    }
 }
