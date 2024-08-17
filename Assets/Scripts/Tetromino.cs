@@ -39,4 +39,9 @@ public class Tetromino : MonoBehaviour
     {
         outlineMeshCollider.enabled = _gameState.scaffoldingOutlineSolid;
     }
+
+    
+    public void Rotate90() {
+        
+    }
 }

@@ -113,6 +113,10 @@ public class Crane : MonoBehaviour {
         }
     }
 
+    public void ResetTargetPos() {
+        SetTargetPos(gridPos);
+    }
+
     public void GrabNewScaffold() {
         
         grabbedTile = tetroSpawner.Next().GetComponent<TetrominoGroupBase>();
@@ -121,7 +125,7 @@ public class Crane : MonoBehaviour {
         grabbedTile._state = TetrominoGroupBase.State.Grabbed;
         
         craneState = CraneState.MOVING;
-        SetTargetPos(gridPos);
+        Invoke(nameof(ResetTargetPos), 0.1f);
     }
 
     public void Grab() {
