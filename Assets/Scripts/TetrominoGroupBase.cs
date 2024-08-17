@@ -75,6 +75,18 @@ public class TetrominoGroupBase : MonoBehaviour
         if (tetrominoType==Tetromino.TetrominoType.House)
         {
             tetrominoGroupType=TetrominoGroupType.Unknown;
+
+            if (isStatic) {
+                var tetrominos = GetComponentsInChildren<Tetromino>();
+                foreach (var t in tetrominos) {
+                    var renderers = t.GetComponentsInChildren<MeshRenderer>();
+                    foreach (var meshRenderer in renderers) {
+                        foreach (var meshRendererMaterial in meshRenderer.materials) {
+                            meshRendererMaterial.color = new Color(0.8f, 0.8f, 0.8f);
+                        }
+                    }
+                }
+            }
         }
     }
 

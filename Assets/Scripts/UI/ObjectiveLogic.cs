@@ -24,9 +24,9 @@ public class ObjectiveLogic : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-
+    void Start() {
+        var weldPoints = FindObjectsOfType<WeldPoint>();
+        objectiveTarget = weldPoints.Length / 2;
     }
 
     // Update is called once per frame
