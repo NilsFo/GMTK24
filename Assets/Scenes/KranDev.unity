@@ -1360,6 +1360,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4562872117541467263, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562872117541467263, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5251490255253787191, guid: 92942b6dc1f0ee642a6523853f0d6d81,
         type: 3}
       propertyPath: m_Name
@@ -1370,6 +1380,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92942b6dc1f0ee642a6523853f0d6d81, type: 3}
+--- !u!1 &639063679367370420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7511759646397767332, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+    type: 3}
+  m_PrefabInstance: {fileID: 639063679367370419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &639063679367370421 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8070751063045620902, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+    type: 3}
+  m_PrefabInstance: {fileID: 639063679367370419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &639063679367370422 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9024729752135427576, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+    type: 3}
+  m_PrefabInstance: {fileID: 639063679367370419}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3392943403416825575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1549,6 +1577,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameState
       objectReference: {fileID: 0}
+    - target: {fileID: 5706283700379175552, guid: 0878952b3036f72409541d1a065c6ba8,
+        type: 3}
+      propertyPath: winUI
+      value: 
+      objectReference: {fileID: 639063679367370421}
+    - target: {fileID: 5706283700379175552, guid: 0878952b3036f72409541d1a065c6ba8,
+        type: 3}
+      propertyPath: pauseUI
+      value: 
+      objectReference: {fileID: 639063679367370420}
+    - target: {fileID: 5706283700379175552, guid: 0878952b3036f72409541d1a065c6ba8,
+        type: 3}
+      propertyPath: gameplayUI
+      value: 
+      objectReference: {fileID: 639063679367370422}
     - target: {fileID: 7031559503903871509, guid: 0878952b3036f72409541d1a065c6ba8,
         type: 3}
       propertyPath: m_LocalPosition.x
