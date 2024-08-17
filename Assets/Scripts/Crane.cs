@@ -23,7 +23,6 @@ public class Crane : MonoBehaviour {
     public CraneState craneState;
     public TetrominoGroupBase grabbedTile;
 
-    private int _grabbedTileRotation = 0;
 
     
     // Start is called before the first frame update
@@ -119,8 +118,6 @@ public class Crane : MonoBehaviour {
                 grabbedTile.transform.parent = transform;
                 grabbedTile.transform.localPosition = new Vector3(0, -3, 0);  // TODO correct for anchor pos & animate
 
-                _grabbedTileRotation = 0;
-                
                 Debug.Log("Grabbed piece " + grabbedTile.gameObject.name, grabbedTile);
             } else {
                 Debug.Log("Can't grab!");
