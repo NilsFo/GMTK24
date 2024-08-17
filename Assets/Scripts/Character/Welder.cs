@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,21 @@ public class Welder : MonoBehaviour
         if (welderState == WelderState.ACTIVE) {
             if (Mouse.current.leftButton.wasPressedThisFrame) {
                 Weld();
+            }
+        }
+    }
+
+    private void FixedUpdate() {
+        welderState = WelderState.INACTIVE;
+        
+        int layerMask = LayerMask.GetMask("Default", "Entities");
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, weldDistance, layerMask)) {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            var weldPoint = hit.collider.gameObject.GetComponent<WeldPoint>();
+            if (weldPoint != null) {
+                if (weldPoint.weldState is WeldPoint.WeldState.CAN_WELD or WeldPoint.WeldState.WELDED)
+                    welderState = WelderState.ACTIVE;
             }
         }
     }
