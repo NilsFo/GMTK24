@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 2968652935495259582, guid: fc52a95fa13221c4b88024e5bbde2aaf,
         type: 3}
       propertyPath: m_Name
-      value: TetrominoGroupBaseScaffold
+      value: TetrominoGroupBaseHouse
       objectReference: {fileID: 0}
     - target: {fileID: 5608897651804832831, guid: fc52a95fa13221c4b88024e5bbde2aaf,
         type: 3}
@@ -61,6 +61,11 @@ PrefabInstance:
     - target: {fileID: 5608897651804832831, guid: fc52a95fa13221c4b88024e5bbde2aaf,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575392038611086360, guid: fc52a95fa13221c4b88024e5bbde2aaf,
+        type: 3}
+      propertyPath: tetrominoType
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

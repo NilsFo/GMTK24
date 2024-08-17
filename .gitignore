@@ -1015,3 +1015,7 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+
+# Blender
+*.blend1
+*.blend1.meta

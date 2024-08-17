@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.UI;
 using UnityEngine;
 
@@ -32,10 +34,13 @@ public class TetrominoGroupBase : MonoBehaviour
     }
 
     private Grid3D _grid;
-
-
-    [Header("General Parameters")]
-    [SerializeField]
+    
+    public static float moveSpeed = 15f;
+    public static float rotationSpeed = 180f;
+    
+    public bool isStatic = false;
+    
+    [Header("General Parameters")][SerializeField]
     private Tetromino.TetrominoType tetrominoType;
     [SerializeField]
     private TetrominoGroupType tetrominoGroupType=TetrominoGroupType.Unknown;
@@ -48,23 +53,20 @@ public class TetrominoGroupBase : MonoBehaviour
 
     [SerializeField] private GameObject[] shapeBlocks;
 
-    [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float rotationSpeed = 3f;
+    [SerializeField] private GameObject anchorePoint;
 
     [SerializeField] private Vector3Int currentIndex;
     [SerializeField] private Vector3Int lastValidIndex;
 
     [SerializeField] private Vector3 targetPos;
-
+    [SerializeField] private Quaternion targetRotation;
+    
     // Start is called before the first frame update
     void Start()
     {
         _grid = FindObjectOfType<Grid3D>();
-        shapeBlocks = new GameObject[transform.childCount];
-        for (int i = 0; i < shapeBlocks.Length; i++)
-        {
-            shapeBlocks[i] = transform.GetChild(i).gameObject;
-        }
+        shapeBlocks = transform.GetComponentsInChildren<Tetromino>().Select(t => t.gameObject).ToArray();
+        
         currentIndex = _grid.WorldToLocal(transform.position);
         lastValidIndex = currentIndex;
 
@@ -143,7 +145,6 @@ public class TetrominoGroupBase : MonoBehaviour
                 }
 
                 bool canBePlaced = _grid.CanBePlaced(centerIndexes);
-                Debug.Log("CanBePlaced:" + canBePlaced);
                 if (canBePlaced)
                 {
                     lastValidIndex = nextIndex;
@@ -168,6 +169,19 @@ public class TetrominoGroupBase : MonoBehaviour
             }
 
         }
+        else if(_state == State.Rotating)
+        {
+            float diff = Quaternion.Angle(transform.rotation, targetRotation);
+            if (diff < 0.1f)
+            {
+                transform.rotation = targetRotation;
+                _state = State.Grabbed;
+            }
+            else
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+        }
     }
 
     public Vector3[] GetShapeCenterPoints()
@@ -180,6 +194,17 @@ public class TetrominoGroupBase : MonoBehaviour
         return result;
     }
 
+    
+    public Vector3[] GetLocalShapeCenterPoints()
+    {
+        Vector3[] result = new Vector3[shapeBlocks.Length];
+        for (int i = 0; i < shapeBlocks.Length; i++)
+        {
+            result[i] = shapeBlocks[i].transform.position - transform.position;
+        }
+        return result;
+    }
+    
     public void MoveToPos(Vector3 pos)
     {
         if (_state == State.Grabbed)
@@ -194,28 +219,74 @@ public class TetrominoGroupBase : MonoBehaviour
         if (_state == State.Grabbed)
         {
             var euler = transform.rotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(euler.x, euler.y + 90, euler.z);
-            _state = State.Grabbed;
-        }
-    }
-
-    public void RotateLeft()
-    {
-        if (_state == State.Grabbed)
-        {
-            var euler = transform.rotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(euler.x, euler.y - 90, euler.z);
+            targetRotation = Quaternion.Euler(euler.x, euler.y + 90, euler.z);
             _state = State.Rotating;
         }
     }
-    public bool DropPiece()
-    {
-        if (_state == State.Grabbed)
-        {
-            _state = State.Drop;
-            currentIndex = _grid.WorldToLocal(transform.position);
-            return true;
+    
+    public bool DropPiece() {
+        if (_state == State.Grabbed && _grid.IsInsideDropZone(transform.position)) {
+            Vector3Int[] centerIndexes = _grid.ConvertToLocal(GetShapeCenterPoints());
+            bool canBePlaced = _grid.CanBePlaced(centerIndexes);
+            if (canBePlaced)
+            {
+                currentIndex = _grid.WorldToLocal(transform.position);
+                _state = State.Drop;
+                return true;
+            }
         }
         return false;
+    }
+
+    public bool IsGrabable() {
+        if (isStatic)
+            return false;
+
+        
+        if (_state == State.Placed)
+        {
+            if (IsWelded())
+                return false;
+            
+            Vector3Int[] centerIndexes = _grid.ConvertToLocal(GetShapeCenterPoints());
+            for (int i = 0; i < centerIndexes.Length; i++)
+            {
+                var cell = _grid.GetHighestCell(new Vector2Int(centerIndexes[i].x, centerIndexes[i].z));
+                if (cell != null && cell != this)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public bool IsWelded() {
+        var welds = GetComponentsInChildren<WeldPoint>();
+        return welds.Any(w => w.weldState == WeldPoint.WeldState.WELDED);
+    }
+
+    public TetrominoGroupBase GrabPiece()
+    {
+        if (!IsGrabable())
+        {
+            return null;
+        }
+        Vector3Int[] currentCenterPointsOnGrid = _grid.ConvertToLocal(GetShapeCenterPoints());
+        _grid.RemoveShape(currentCenterPointsOnGrid);
+        _state = State.Grabbed;
+        return this;
+    }
+
+    public float GetBlockHeight() {
+        var centerPoints = GetShapeCenterPoints();
+        var maxHeight = centerPoints.Max(c => c.y);
+        var minHeight = centerPoints.Min(c => c.y);
+        return maxHeight - minHeight + 3;
+    }
+
+    public GameObject GetAnchorPoint()
+    {
+        return anchorePoint;
     }
 }
