@@ -20,7 +20,6 @@ public class Grid3D : MonoBehaviour
     [SerializeField] private int sizeZ = 10;
 
     [SerializeField] private int bufferX = 3;
-    [SerializeField] private int bufferY = 3;
     [SerializeField] private int bufferZ = 3;
     
     [SerializeField] private float blockScaleX = 3f;
@@ -33,20 +32,20 @@ public class Grid3D : MonoBehaviour
         _grid = new TetrominoGroupBase[sizeX, sizeY, sizeZ];
     }
 
-    private (int, bool) ToIndex(float pos, int minX, int maxX)
+    private (int, bool) ToIndex(float pos, int min, int max)
     {
         bool isNotInside = false;
         float reminderX = pos % blockScaleX;
         int index = (int)((pos - reminderX) / blockScaleX);
         if (reminderX < 0) index += 1;
-        if (index < minX)
+        if (index < min)
         {
-            index = minX;
+            index = min;
             isNotInside = true;
         }
-        if (index > maxX)
+        if (index > max)
         {
-            index = maxX;
+            index = max;
             isNotInside = true;
         }
         return (index, isNotInside);
@@ -83,6 +82,15 @@ public class Grid3D : MonoBehaviour
 
         return !indexX.Item2 && !indexY.Item2 && !indexZ.Item2;
     }
+    
+    public bool IsInsideDropZone(Vector3 pos)
+    {
+        var indexX = ToIndex(pos.x, 0+bufferX, sizeX-bufferX);
+        var indexY = ToIndex(pos.y, 0, sizeY);
+        var indexZ = ToIndex(pos.z, 0+bufferZ, sizeZ-bufferZ);
+
+        return !indexX.Item2 && !indexY.Item2 && !indexZ.Item2;
+    }
 
     public Vector3Int[] ConvertToLocal(Vector3[] pos)
     {
@@ -110,7 +118,7 @@ public class Grid3D : MonoBehaviour
         for (int i = 0; i < indexes.Length; i++)
         {
             var shape = _grid[indexes[i].x, indexes[i].y, indexes[i].z];
-            if (shape == null)
+            if (shape != null)
             {
                 result = false;
                 break;
@@ -141,6 +149,12 @@ public class Grid3D : MonoBehaviour
             _grid[indexes[i].x, indexes[i].y, indexes[i].z] = null;
         }
     }
+    
+    public Vector3 GetScale()
+    {
+        return new Vector3(blockScaleX, blockScaleY, blockScaleZ);
+    }
+    
     [Obsolete]
     public Bounds ToBounds()
     {
@@ -201,14 +215,13 @@ public class Grid3D : MonoBehaviour
                         Gizmos.color = Color.gray;
                     }
 
-                    Handles.Label(LocalToWorld(pos), statusString);
-                    Gizmos.DrawWireCube(LocalToWorld(pos), new Vector3(blockScaleX, blockScaleY, blockScaleZ) * 0.95f);
+                    //Handles.Label(LocalToWorld(pos), statusString);
+                    Gizmos.DrawWireCube(LocalToWorld(pos), new Vector3(blockScaleX, blockScaleY, blockScaleZ) * 1f);
                 }
             }
         }
     }
-
-
+    
     private void DrawBounds(Bounds bounds, Color color)
     {
         Vector3[] corners = new Vector3[8];
@@ -245,9 +258,7 @@ public class Grid3D : MonoBehaviour
         Gizmos.DrawLine(corners[2], corners[6]);
         Gizmos.DrawLine(corners[3], corners[7]);
     }
-
-
+    
 #endif
-
-
+    
 }

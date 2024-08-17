@@ -50,14 +50,10 @@ public class Crane : MonoBehaviour {
 
         else if (craneState is CraneState.NEW_TILE) {
             var targetPos = tetroSpawner.transform.position;
-            transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPos, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, targetPos) < 0.01f) {
-                grabbedTile = tetroSpawner.Next().GetComponent<TetrominoGroupBase>();
-                grabbedTile.transform.parent = transform;
-                grabbedTile.transform.localPosition = new Vector3(0, -3, 0);  // TODO correct for anchor pos
-                
-                craneState = CraneState.MOVING;
+                GrabNewScaffold();
             }
         }
         
@@ -80,12 +76,29 @@ public class Crane : MonoBehaviour {
         }
     }
 
+    public void GrabNewScaffold() {
+        
+        grabbedTile = tetroSpawner.Next().GetComponent<TetrominoGroupBase>();
+        grabbedTile.transform.parent = transform;
+        grabbedTile.transform.localPosition = new Vector3(0, -3, 0);  // TODO correct for anchor pos
+        grabbedTile._state = TetrominoGroupBase.State.Grabbed;
+        
+        craneState = CraneState.MOVING;
+    }
+
     public void Grab() {
         // TODO
     }
 
     public void Drop() {
-        // TODO
+        if(grabbedTile == null)
+            return;
+        bool success = grabbedTile.DropPiece();
+        if (success) {
+            grabbedTile.transform.parent = null;
+            grabbedTile = null;
+            craneState = CraneState.IDLE;
+        }
     }
 
     public bool HasGrabbedTile() {
