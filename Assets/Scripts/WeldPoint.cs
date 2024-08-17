@@ -11,11 +11,15 @@ public class WeldPoint : MonoBehaviour
     public WeldState weldState = WeldState.UNWELDED;
     public WeldPoint connectedWeld = null;
 
+    public TetrominoGroupBase myBase;
+    
+
     public MeshRenderer renderer;
     
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
+        myBase = GetComponentInParent<TetrominoGroupBase>();
+        
         weldState = WeldState.UNWELDED;
         renderer.material.color = Color.red;
     }

@@ -46,7 +46,7 @@ public class Welder : MonoBehaviour
                 else if(weldPoint.weldState == WeldPoint.WeldState.WELDED)
                     weldPoint.Unweld();
             } else {
-                Debug.Log("Not a Weld Point");
+                Debug.Log("Not a Weld Point " + hit.transform.gameObject.name, hit.transform);
             }
         }
         else
