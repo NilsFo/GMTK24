@@ -82,7 +82,7 @@ MonoBehaviour:
   gravity: 20
   jumpSpeed: 8
   coyoteTime: 0.1
-  sprintEnabled: 0
+  sprintEnabled: 1
   inputDisabled: 0
   velocity: {x: 0, y: 0, z: 0}
   playerHeightStanding: 1.8

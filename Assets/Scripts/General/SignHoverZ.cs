@@ -15,7 +15,7 @@ public class SignHoverZ : MonoBehaviour
     void Start()
     {
         //Random jitter
-        dt = Random.Range(0.0f, 200.0f);
+        //dt = Random.Range(0.0f, 200.0f);
 
         x = transform.position.x;
         y = transform.position.y;
