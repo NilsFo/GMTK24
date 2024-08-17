@@ -196,10 +196,15 @@ public class TetrominoGroupBase : MonoBehaviour
         }
     }
     public bool DropPiece() {
-        if (_state == State.Grabbed) {
-            _state = State.Drop;
-            currentIndex = _grid.WorldToLocal(transform.position);
-            return true;
+        if (_state == State.Grabbed && _grid.IsInsideDropZone(transform.position)) {
+            Vector3Int[] centerIndexes = _grid.ConvertToLocal(GetShapeCenterPoints());
+            bool canBePlaced = _grid.CanBePlaced(centerIndexes);
+            if (canBePlaced)
+            {
+                currentIndex = _grid.WorldToLocal(transform.position);
+                _state = State.Drop;
+                return true;
+            }
         }
         return false;
     }
