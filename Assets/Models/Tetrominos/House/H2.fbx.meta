@@ -3,7 +3,22 @@ guid: 3150ed85366b209409bbffe397b04330
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Concrete
+    second: {fileID: 2100000, guid: 4849aebcd6eb44948a9760ab83df711f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sims
+    second: {fileID: 2100000, guid: ccb92860a4440a54eb3300c9ac90251f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Window
+    second: {fileID: 2100000, guid: 39ccd599b4bd36843b6b8f99e6f992fa, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
