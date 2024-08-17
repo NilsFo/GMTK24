@@ -7,14 +7,16 @@ using UnityEngine;
 public class TetrominoGroupBase : MonoBehaviour
 {
 
-    enum State
+    public enum State
     {
         Spawned,
         Moving,
+        Drop,
         Rotating,
         Placed,
-        Graped,
+        Grabbed,
         Welded,
+        Faulty
     }
     
     private Grid3D _grid;
@@ -26,24 +28,29 @@ public class TetrominoGroupBase : MonoBehaviour
     
     
     [Header("Grid Behaviour")]
-    [SerializeField] private State _state = State.Spawned;
+    [SerializeField] public State _state = State.Spawned;
     
-    [SerializeField] private GameObject anchorPoints;
-    [SerializeField] private GameObject bottemPoints;
+    [SerializeField] private GameObject[] shapeBlocks;
     
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float rotationSpeed = 3f;
     
     [SerializeField] private Vector3Int currentIndex;
-
+    [SerializeField] private Vector3Int lastValidIndex;
+    
     [SerializeField] private Vector3 targetPos;
-    [SerializeField] private Quaternion targetRotation;
-    [SerializeField] private Vector3 anchorOffset;
     
     // Start is called before the first frame update
     void Start()
     {
         _grid = FindObjectOfType<Grid3D>();
+        shapeBlocks = new GameObject[transform.childCount];
+        for (int i = 0; i < shapeBlocks.Length; i++)
+        {
+            shapeBlocks[i] = transform.GetChild(i).gameObject;
+        }
+        currentIndex = _grid.WorldToLocal(transform.position);
+        lastValidIndex = currentIndex;
     }
 
     // Update is called once per frame
@@ -51,42 +58,109 @@ public class TetrominoGroupBase : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            RotateRight();
+            MoveToPos(targetPos);
         }
         
         if (_state == State.Moving)
         {
             float dist = Vector3.Distance(transform.position, targetPos);
+            
             if (dist < 0.1f)
             {
                 _state = State.Placed;
-                transform.position = targetPos;
-                currentIndex = _grid.WorldToLocal(transform.position);
-                _grid.PlaceShape(this, new[] { currentIndex });
+                currentIndex = _grid.WorldToLocal(targetPos);
+                transform.position = _grid.LocalToWorld(currentIndex);
+                Vector3Int[] currentCenterPointsOnGrid = _grid.ConvertToLocal(GetShapeCenterPoints());
+                _grid.PlaceShape(this, currentCenterPointsOnGrid);
             }
             else
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+                currentIndex = _grid.WorldToLocal(transform.position);
             }
         }
-        else if (_state == State.Rotating)
+        else if(_state == State.Spawned)
         {
-            float dist = Quaternion.Angle(transform.rotation, targetRotation);
-            if (dist < 0.1f)
+            bool inGrid = _grid.IsInsideDropZone(transform.position);
+            if (!inGrid)
             {
-                _state = State.Graped;
-                transform.rotation = targetRotation;
+                Debug.LogError(""+ gameObject.name + " is not inside Grid!");
+                _state = State.Faulty;
             }
             else
             {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                Vector3Int[] result = _grid.ConvertToLocal(GetShapeCenterPoints());
+                _grid.PlaceShape(this, result);
+                _state = State.Placed;
             }
+        } else if (_state == State.Drop)
+        {
+            Vector3Int nextIndex;
+            if (currentIndex.y - 1 < 0)
+            {
+                nextIndex = new Vector3Int(currentIndex.x, 0, currentIndex.z);
+            }
+            else
+            {
+                nextIndex = new Vector3Int(currentIndex.x, currentIndex.y - 1, currentIndex.z);
+            }
+
+            if (lastValidIndex != nextIndex)
+            {
+                Vector3Int[] centerIndexes = _grid.ConvertToLocal(GetShapeCenterPoints());
+                for (int i = 0; i < centerIndexes.Length; i++)
+                {
+                    if (centerIndexes[i].y - 1 < 0)
+                    {
+                        centerIndexes[i] = new Vector3Int(centerIndexes[i].x, 0, centerIndexes[i].z);
+                    }
+                    else
+                    {
+                        centerIndexes[i] = new Vector3Int(centerIndexes[i].x, centerIndexes[i].y - 1, centerIndexes[i].z);
+                    }
+                }
+            
+                bool canBePlaced = _grid.CanBePlaced(centerIndexes);
+                Debug.Log("CanBePlaced:" + canBePlaced);
+                if (canBePlaced)
+                {
+                    lastValidIndex = nextIndex;
+                }
+            }
+
+            Vector3 nextPos = _grid.LocalToWorld(lastValidIndex);
+            float dist = Vector3.Distance(transform.position, nextPos);
+            
+            if (dist < 0.1f)
+            {
+                _state = State.Placed;
+                currentIndex = _grid.WorldToLocal(nextPos);
+                transform.position = _grid.LocalToWorld(currentIndex);
+                Vector3Int[] currentCenterPointsOnGrid = _grid.ConvertToLocal(GetShapeCenterPoints());
+                _grid.PlaceShape(this, currentCenterPointsOnGrid);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, nextPos, moveSpeed * Time.deltaTime);
+                currentIndex = _grid.WorldToLocal(transform.position);
+            }
+            
         }
     }
 
+    public Vector3[] GetShapeCenterPoints()
+    {
+        Vector3[] result = new Vector3[shapeBlocks.Length];
+        for (int i = 0; i < shapeBlocks.Length; i++)
+        {
+            result[i] = shapeBlocks[i].transform.position;
+        }
+        return result;
+    }
+    
     public void MoveToPos(Vector3 pos)
     {
-        if (_state == State.Graped)
+        if (_state == State.Grabbed)
         {
             targetPos = pos;
             _state = State.Moving;
@@ -95,25 +169,29 @@ public class TetrominoGroupBase : MonoBehaviour
 
     public void RotateRight()
     {
-        if (_state == State.Graped)
+        if (_state == State.Grabbed)
         {
             var euler = transform.rotation.eulerAngles;
             transform.rotation =  Quaternion.Euler(euler.x, euler.y+90, euler.z);
-            if (anchorOffset != Vector3.zero)
-            {
-                transform.position = new Vector3(transform.position.x + anchorOffset.y, transform.position.y, transform.position.z + anchorOffset.z);
-            }
-            _state = State.Graped;
+            _state = State.Grabbed;
         }
     }
     
     public void RotateLeft()
     {
-        if (_state == State.Graped)
+        if (_state == State.Grabbed)
         {
             var euler = transform.rotation.eulerAngles;
-            targetRotation =  Quaternion.Euler(euler.x, euler.y-90, euler.z);
+            transform.rotation =  Quaternion.Euler(euler.x, euler.y-90, euler.z);
             _state = State.Rotating;
         }
+    }
+    public bool DropPiece() {
+        if (_state == State.Grabbed) {
+            _state = State.Drop;
+            currentIndex = _grid.WorldToLocal(transform.position);
+            return true;
+        }
+        return false;
     }
 }
