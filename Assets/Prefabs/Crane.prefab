@@ -52,9 +52,35 @@ MonoBehaviour:
   seil: {fileID: 19403761460310183}
   yLevel: 10
   gridPos: {x: 0, y: 0}
-  speed: 5
+  speed: 8
   craneState: 0
   grabbedTile: {fileID: 0}
+  grabPoint: {x: 0, y: 0, z: 0}
+  speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.00000087730587
+      value: 0.26552147
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speedCurveWidth: 1
 --- !u!1 &4286730504093981268
 GameObject:
   m_ObjectHideFlags: 0

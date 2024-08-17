@@ -14,7 +14,7 @@ public class WeldPoint : MonoBehaviour
     public TetrominoGroupBase myBase;
     
 
-    public MeshRenderer renderer;
+    public new MeshRenderer renderer;
     
     // Start is called before the first frame update
     void Start() {

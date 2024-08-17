@@ -18,12 +18,16 @@ public class Crane : MonoBehaviour {
     public enum CraneState {
         MOVING,
         NEW_TILE,
+        GRABBING,
         IDLE
     }
     public CraneState craneState;
     public TetrominoGroupBase grabbedTile;
 
+    public Vector3 grabPoint;
 
+    public AnimationCurve speedCurve;
+    public float speedCurveWidth = 2f;
     
     // Start is called before the first frame update
     void Start()
@@ -40,8 +44,10 @@ public class Crane : MonoBehaviour {
 
         if (craneState is CraneState.IDLE or CraneState.MOVING) {
             var targetPos = grid.LocalToWorld(new Vector3Int(gridPos.x, 0, gridPos.y));
+            
             targetPos.y = yLevel;
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+            var speedMod = speedCurve.Evaluate(Vector3.Distance(transform.position, targetPos) / speedCurveWidth) * speed;
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, speedMod * Time.deltaTime);
             
             if(Vector3.Distance(transform.position, targetPos) < 0.01f) {
                 craneState = CraneState.IDLE;
@@ -52,10 +58,22 @@ public class Crane : MonoBehaviour {
 
         else if (craneState is CraneState.NEW_TILE) {
             var targetPos = tetroSpawner.transform.position;
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime * 5);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime * 2);
 
             if (Vector3.Distance(transform.position, targetPos) < 0.01f) {
                 GrabNewScaffold();
+            }
+        }
+        
+        else if (craneState is CraneState.GRABBING) {
+            var targetPos = grabPoint;
+            
+            var speedMod = speedCurve.Evaluate(Vector3.Distance(transform.position, targetPos) / speedCurveWidth / 2f) * speed;
+
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, speedMod * Time.deltaTime);
+            
+            if (Vector3.Distance(transform.position, targetPos) < 0.01f) {
+                GrabComplete();
             }
         }
         
@@ -103,12 +121,22 @@ public class Crane : MonoBehaviour {
         grabbedTile._state = TetrominoGroupBase.State.Grabbed;
         
         craneState = CraneState.MOVING;
+        SetTargetPos(gridPos);
     }
 
     public void Grab() {
         if (craneState != CraneState.IDLE || HasGrabbedTile())
             return;
-        
+        var tetromino = grid.GetHighestCell(gridPos);
+        if (tetromino != null) {
+            craneState = CraneState.GRABBING;
+            grabPoint = tetromino.GetAnchorPoint().transform.position;
+            var g = grid.WorldToLocal(grabPoint);
+            gridPos = new Vector2Int(g.x, g.z);
+        }
+    }
+
+    public void GrabComplete() {
         var tetromino = grid.GetHighestCell(gridPos);
         if (tetromino != null) {
             Debug.Log("Grabbing " + tetromino.gameObject.name, tetromino);
@@ -116,14 +144,17 @@ public class Crane : MonoBehaviour {
             if (tetromino != null) {
                 grabbedTile = tetromino;
                 grabbedTile.transform.parent = transform;
-                grabbedTile.transform.localPosition = new Vector3(0, -3, 0);  // TODO correct for anchor pos & animate
+                grabbedTile.transform.localPosition = new Vector3(0, 0, 0) - tetromino.GetAnchorPoint().transform.localPosition;  // TODO correct for anchor pos & animate
 
                 Debug.Log("Grabbed piece " + grabbedTile.gameObject.name, grabbedTile);
+                craneState = CraneState.MOVING;
             } else {
                 Debug.Log("Can't grab!");
+                craneState = CraneState.MOVING;
             }
         } else {
             Debug.Log("Can't grab at " + gridPos);
+            craneState = CraneState.MOVING;
         }
     }
 

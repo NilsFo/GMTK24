@@ -3,11 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Grid3D : MonoBehaviour
@@ -229,7 +224,7 @@ public class Grid3D : MonoBehaviour
                         if (thing == null)
                         {
                             continue;
-                            Gizmos.color = Color.red;
+                            //Gizmos.color = Color.red;
                         }
                         else
                         {
