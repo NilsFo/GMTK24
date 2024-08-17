@@ -49,7 +49,7 @@ public class WeldPoint : MonoBehaviour
 
     public void Unweld()
     {
-        if (connectedWeld != null && weldState == WeldState.WELDED && connectedWeld.weldState == WeldState.WELDED)
+        if  (connectedWeld != null && weldState == WeldState.WELDED && connectedWeld.weldState == WeldState.WELDED)
         {
             weldState = WeldState.CAN_WELD;
             //TODO Unweld the other one too
