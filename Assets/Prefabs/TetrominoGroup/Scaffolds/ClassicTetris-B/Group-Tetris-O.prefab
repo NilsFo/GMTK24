@@ -58,6 +58,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1163288702317418392, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222728234313708772, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1748018411489108437, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_IsActive
@@ -68,6 +78,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scaffold cube (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2815785091825518257, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5649939581788023332, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_Layer
@@ -77,6 +92,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542139642959212192, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545964270411767442, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009089706038488471, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8782122440430747881, guid: 4e6bec2b0f61f024db59b97e6ba2d465, type: 3}
@@ -148,10 +178,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1163288702317418392, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206395520636353378, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222728234313708772, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2723607250462551999, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_Name
       value: Scaffold cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815785091825518257, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5649939581788023332, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
@@ -159,6 +209,21 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6374662647202394664, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542139642959212192, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545964270411767442, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009089706038488471, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -323,10 +388,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 956603156886306266, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1163288702317418392, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206395520636353378, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222728234313708772, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2723607250462551999, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_Name
       value: Scaffold cube (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815785091825518257, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5273862490773928696, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
@@ -339,6 +429,21 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6374662647202394664, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542139642959212192, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545964270411767442, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009089706038488471, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -413,10 +518,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1163288702317418392, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206395520636353378, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222728234313708772, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2723607250462551999, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
       propertyPath: m_Name
       value: Scaffold cube (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815785091825518257, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4133984960402203307, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
         type: 3}
@@ -437,6 +562,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542139642959212192, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545964270411767442, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009089706038488471, guid: 4e6bec2b0f61f024db59b97e6ba2d465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8782122440430747881, guid: 4e6bec2b0f61f024db59b97e6ba2d465, type: 3}
