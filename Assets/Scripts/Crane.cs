@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 public class Crane : MonoBehaviour {
     public Grid3D grid;
     public TetrominoSpawner tetroSpawner;
+
+    public Transform kranschiene, laufkatze, seil;
     
     public float yLevel = 10f;
     public Vector2Int gridPos;
@@ -58,6 +60,12 @@ public class Crane : MonoBehaviour {
                 craneState = CraneState.MOVING;
             }
         }
+        
+        // Visuals
+        laufkatze.transform.position = new Vector3(transform.position.x, laufkatze.transform.position.y, transform.position.z);
+        kranschiene.transform.localPosition = new Vector3(transform.localPosition.x, 0, 0);
+        seil.transform.position = (transform.position + laufkatze.position) / 2;
+        seil.transform.localScale = new Vector3(seil.transform.localScale.x, Vector3.Distance(transform.position, laufkatze.position), seil.transform.localScale.z);
     }
 
     public void SetTargetPos(int x, int y) {
