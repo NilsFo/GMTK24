@@ -54,6 +54,7 @@ public class TetrominoGroupBase : MonoBehaviour
         
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float rotationSpeed = 3f;
+    [SerializeField] private float dropVelocity = 10f;
 
     [SerializeField] private Vector3Int currentIndex;
     [SerializeField] private Vector3Int lastValidIndex;
@@ -163,7 +164,8 @@ public class TetrominoGroupBase : MonoBehaviour
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, nextPos, moveSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, nextPos, dropVelocity * Time.deltaTime);
+                dropVelocity -= Physics.gravity.y * Time.deltaTime;
                 currentIndex = _grid.WorldToLocal(transform.position);
             }
 
@@ -227,6 +229,7 @@ public class TetrominoGroupBase : MonoBehaviour
             {
                 currentIndex = _grid.WorldToLocal(transform.position);
                 _state = State.Drop;
+                dropVelocity = 0;
                 return true;
             }
         }
