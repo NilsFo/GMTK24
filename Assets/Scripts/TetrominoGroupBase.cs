@@ -130,6 +130,7 @@ public class TetrominoGroupBase : MonoBehaviour
             else
             {
                 Vector3Int[] result = _grid.ConvertToLocal(GetShapeCenterPoints());
+                transform.position = _grid.LocalToWorld(currentIndex);
                 _grid.PlaceShape(this, result);
                 _state = State.Placed;
             }
