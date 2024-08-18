@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,16 @@ public class WeldPoint : MonoBehaviour
 
         weldState = WeldState.UNWELDED;
         renderer.material.color = Color.red;
+    }
+
+    private void Update() {
+        if (weldState == WeldState.CAN_WELD) {
+            if ((int)Time.time % 2 == 0) {
+                renderer.material.color = Color.yellow;
+            } else {
+                renderer.material.color = Color.red;
+            }
+        }
     }
 
     public void Weld()

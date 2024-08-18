@@ -902,8 +902,8 @@ Camera:
   m_GameObject: {fileID: 579138368}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2397,6 +2397,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3470270579921197593, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470270579921197593, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3477497865027562770, guid: 92942b6dc1f0ee642a6523853f0d6d81,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2833,12 +2843,12 @@ PrefabInstance:
         type: 3}
       propertyPath: level2
       value: 
-      objectReference: {fileID: 1662896429}
+      objectReference: {fileID: 1342345774}
     - target: {fileID: 5706283700379175552, guid: 0878952b3036f72409541d1a065c6ba8,
         type: 3}
       propertyPath: level3
       value: 
-      objectReference: {fileID: 1342345774}
+      objectReference: {fileID: 1662896429}
     - target: {fileID: 5706283700379175552, guid: 0878952b3036f72409541d1a065c6ba8,
         type: 3}
       propertyPath: level4
