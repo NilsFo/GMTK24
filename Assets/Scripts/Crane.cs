@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Crane : MonoBehaviour {
@@ -45,6 +46,8 @@ public class Crane : MonoBehaviour {
     }
 
     public ControlState currentControlState = ControlState.North;
+    public UnityEvent OnGrabEvent = new UnityEvent(), OnDropEvent = new UnityEvent();
+    
     // Start is called before the first frame update
     void Start() {
         _gameState = FindObjectOfType<GameState>();
@@ -154,6 +157,7 @@ public class Crane : MonoBehaviour {
         if (craneState != CraneState.IDLE || HasGrabbedTile())
             return;
         var tetromino = grid.GetHighestCell(gridPos);
+        OnGrabEvent.Invoke();
         if (tetromino != null) {
             craneState = CraneState.GRABBING;
             grabPoint = tetromino.GetAnchorPoint().transform.position;
@@ -187,6 +191,8 @@ public class Crane : MonoBehaviour {
     public void Drop() {
         if (grabbedTile == null)
             return;
+        
+        OnDropEvent.Invoke();
         bool success = grabbedTile.DropPiece();
         if (success) {
             grabbedTile.transform.parent = null;
@@ -303,11 +309,11 @@ public class Crane : MonoBehaviour {
         }
 
         // Get Scaffold
-        if (k.qKey.wasPressedThisFrame) {
+        /*if (k.qKey.wasPressedThisFrame) {
             if (craneState is CraneState.IDLE or CraneState.MOVING && !HasGrabbedTile()) {
                 craneState = CraneState.NEW_TILE;
             }
-        }
+        }*/
     }
 
 }

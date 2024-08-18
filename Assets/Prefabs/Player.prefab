@@ -103,6 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   welder: {fileID: 7196557074041635064}
   welderAnim: {fileID: 7553328159916390961}
+  remoteAnim: {fileID: 5523205679218123574}
 --- !u!1 &1584802341187472089
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,10 +282,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 5767911873431555216}
-  cameraShakeDuration: 0
-  amplitudeGainTarget: 0
-  frequencyGainTarget: 0
-  cameraShakeResetSpeed: 2
 --- !u!1 &4318419487809708493
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,8 +745,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f31d4feeccf464e42ac4ae22bd84fb75,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5523205679218123574}
   m_SourcePrefab: {fileID: 100100000, guid: f31d4feeccf464e42ac4ae22bd84fb75, type: 3}
+--- !u!1 &5870137211259557405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f31d4feeccf464e42ac4ae22bd84fb75,
+    type: 3}
+  m_PrefabInstance: {fileID: 6753010618361490252}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5523205679218123574
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5870137211259557405}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c54e2ceee88ac9b4e8caefc585410fd8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &6502417335928605863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f31d4feeccf464e42ac4ae22bd84fb75,

@@ -1,11 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Cinemachine;
 using DG.Tweening;
-using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
@@ -13,13 +9,7 @@ using UnityEngine.Serialization;
 public class CameraShaker : MonoBehaviour
 {
 
-    public Camera camera;
-
-    [Header("Camera Shake")] public float cameraShakeDuration = 0f;
-    private float _cameraShakeDurationTimer = 0f;
-    public float amplitudeGainTarget = 0;
-    public float frequencyGainTarget = 0;
-    public float cameraShakeResetSpeed = 2f;
+    public new Camera camera;
 
 
     // Start is called before the first frame update
