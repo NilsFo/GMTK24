@@ -17,6 +17,7 @@ public class WeldTrigger : MonoBehaviour {
         if (_otherWeldPoint == null)
             return;
         myWeldPoint.connectedWeld = _otherWeldPoint;
+        // TODO this throws an exception on start
 
         myWeldPoint.weldState = WeldPoint.WeldState.CAN_WELD;
         myWeldPoint.connectedWeld.weldState = WeldPoint.WeldState.CAN_WELD;
