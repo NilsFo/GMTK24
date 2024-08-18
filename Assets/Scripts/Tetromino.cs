@@ -37,11 +37,7 @@ public class Tetromino : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        outlineMeshCollider.enabled = _gameState.scaffoldingOutlineSolid;
+        //outlineMeshCollider.enabled = _gameState.scaffoldingOutlineSolid;
     }
 
-    
-    public void Rotate90() {
-        
-    }
 }

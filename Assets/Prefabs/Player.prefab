@@ -54,7 +54,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.8
+  m_Height: 1.7
   m_Radius: 0.35
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumSpeed: 5
-  sprintSpeedModifier: 1.5
+  sprintSpeedModifier: 2
   crouchSpeedModifier: 0.4
   acceleration: 50
   dampening: 30
@@ -85,7 +85,7 @@ MonoBehaviour:
   sprintEnabled: 1
   inputDisabled: 0
   velocity: {x: 0, y: 0, z: 0}
-  playerHeightStanding: 1.8
+  playerHeightStanding: 1.7
   playerHeightCrouching: 1.1
   crouching: 0
   sprinting: 0
