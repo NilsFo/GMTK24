@@ -2196,6 +2196,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 639063679367370419}
   m_PrefabAsset: {fileID: 0}
+--- !u!225 &639063679367370432 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 7108075307243778111, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+    type: 3}
+  m_PrefabInstance: {fileID: 639063679367370419}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3392943403416825575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2375,6 +2381,11 @@ PrefabInstance:
       propertyPath: gameplayUI
       value: 
       objectReference: {fileID: 639063679367370422}
+    - target: {fileID: 5706283700379175552, guid: 0878952b3036f72409541d1a065c6ba8,
+        type: 3}
+      propertyPath: pauseGroup
+      value: 
+      objectReference: {fileID: 639063679367370432}
     - target: {fileID: 5706283700379175552, guid: 0878952b3036f72409541d1a065c6ba8,
         type: 3}
       propertyPath: levelTutorial

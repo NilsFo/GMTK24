@@ -18,13 +18,16 @@ public class ObjectiveLogic : MonoBehaviour
     public int objectiveTarget = 0;
     public int objectiveProgress = 0;
 
+    public AudioClip winClip;
+
     void Awake()
     {
         _gameState = FindObjectOfType<GameState>();
     }
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         var weldPoints = FindObjectsOfType<WeldPoint>();
         objectiveTarget = weldPoints.Length / 2;
     }
@@ -50,6 +53,7 @@ public class ObjectiveLogic : MonoBehaviour
         if (objectiveProgress == objectiveTarget)
         {
             _gameState.TriggerWin();
+            _gameState.musicManager.CreateAudioClip(winClip, _gameState.transform.position, respectBinning:false);
         }
     }
 

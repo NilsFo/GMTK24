@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         levelShare = FindObjectOfType<LevelShare>();
-        musicManager.Play(0, true);
+        musicManager.Play(1, true);
 
         slider.value = MusicManager.userDesiredMasterVolume;
 
@@ -28,6 +28,7 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         MusicManager.userDesiredMasterVolume = slider.value;
     }
 
