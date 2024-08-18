@@ -61,6 +61,9 @@ public class TetrominoGroupBase : MonoBehaviour
 
     [SerializeField] private Vector3 targetPos;
     [SerializeField] private Quaternion targetRotation;
+
+    [Header("Effects")]
+    [SerializeField] private AudioSource dropSFX;
     
     // Start is called before the first frame update
     void Start()
@@ -175,6 +178,8 @@ public class TetrominoGroupBase : MonoBehaviour
                 transform.position = _grid.LocalToWorld(currentIndex);
                 Vector3Int[] currentCenterPointsOnGrid = _grid.ConvertToLocal(GetShapeCenterPoints());
                 _grid.PlaceShape(this, currentCenterPointsOnGrid);
+                
+                dropSFX.Play();
             }
             else
             {
