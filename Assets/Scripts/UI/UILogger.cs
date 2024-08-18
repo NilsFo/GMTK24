@@ -18,6 +18,7 @@ public class UILogger : MonoBehaviour
     public TextMeshProUGUI text;
     public bool showFPS;
     public bool showLog;
+    public bool showWholeStackTrace=true;
 
     void Start()
     {
@@ -42,7 +43,7 @@ public class UILogger : MonoBehaviour
     {
         myLog = logString;
         string newString = "\n [" + type + "] : " + myLog;
-        if (type == LogType.Exception)
+        if (showWholeStackTrace)
         {
             newString = newString + "\n" + stackTrace;
         }
