@@ -22,6 +22,7 @@ public class GameState : MonoBehaviour
     public GameObject gameplayUI;
     public GameObject winUI;
     public GameObject pauseUI;
+    public CanvasGroup pauseGroup;
 
     [Header("Level hookup")]
     public GameObject levelTutorial;
@@ -37,6 +38,12 @@ public class GameState : MonoBehaviour
     private PlayerState _lastKnownPlayerState;
     private LevelShare _levelShare;
     private MusicManager _musicManager;
+    public MusicManager musicManager => _musicManager;
+
+    private float _winAlpha = 0f;
+    public float fadeOutDelay = 3f;
+    public float fadeOutSpeed = 0.5f;
+    private bool _fadeOutEnabled;
 
 
     // Start is called before the first frame update
@@ -46,6 +53,9 @@ public class GameState : MonoBehaviour
         _levelShare = FindAnyObjectByType<LevelShare>();
         _musicManager = FindAnyObjectByType<MusicManager>();
         OnStateChange();
+
+        pauseGroup.alpha = 0;
+        _winAlpha = 0;
 
         levelTutorial.SetActive(false);
         level1.SetActive(false);
@@ -66,8 +76,8 @@ public class GameState : MonoBehaviour
                 break;
         }
 
-        
-        _musicManager.Play(0,true);
+
+        _musicManager.Play(0, true);
     }
 
     // Update is called once per frame
@@ -119,6 +129,11 @@ public class GameState : MonoBehaviour
             }
         }
 
+        if (_fadeOutEnabled)
+        {
+            _winAlpha = Mathf.MoveTowards(_winAlpha, 1, fadeOutSpeed * Time.deltaTime);
+            pauseGroup.alpha = _winAlpha;
+        }
     }
 
     private void OnStateChange()
@@ -128,12 +143,14 @@ public class GameState : MonoBehaviour
         if (currentPlayerState == PlayerState.Paused)
         {
             // Disable mouse
-            Cursor.visible=true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;  
         }
         else
         {
             // Show mouse
-            Cursor.visible=false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
 
@@ -165,6 +182,7 @@ public class GameState : MonoBehaviour
     public void TriggerWin()
     {
         currentPlayerState = PlayerState.Win;
+        OnWin();
     }
 
     public bool IsWon()
@@ -175,6 +193,12 @@ public class GameState : MonoBehaviour
     private void OnWin()
     {
         Debug.Log("A winner is you.");
+        Invoke(nameof(WinFadeOut), fadeOutDelay);
+    }
+
+    private void WinFadeOut()
+    {
+        _fadeOutEnabled = true;
     }
 
     public void BackToMenu()
