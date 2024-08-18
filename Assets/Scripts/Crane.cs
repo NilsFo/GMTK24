@@ -7,7 +7,8 @@ using UnityEngine.InputSystem;
 public class Crane : MonoBehaviour {
     public Grid3D grid;
     public TetrominoSpawner tetroSpawner;
-
+    public Transform player;
+    
     public Transform kranschiene, laufkatze, seil;
 
     public AudioSource craneMoveSFX;
@@ -35,12 +36,22 @@ public class Crane : MonoBehaviour {
 
     public AnimationCurve speedCurve;
     public float speedCurveWidth = 2f;
-    
+
+    public enum ControlState
+    {
+        North,
+        South,
+        East,
+        West
+    }
+
+    public ControlState currentControlState = ControlState.North;
     // Start is called before the first frame update
     void Start()
     {
         var targetPos = grid.LocalToWorld(new Vector3Int(gridPos.x, 0, gridPos.y));
         
+        player = GameObject.FindGameObjectsWithTag("Player")[0].transform;
         targetPos.y = yLevel;
         transform.localPosition = targetPos;
     }
@@ -231,17 +242,82 @@ public class Crane : MonoBehaviour {
 
     private void HandleInput() {
         var k = Keyboard.current;
+
+        if (craneState is CraneState.IDLE)
+        {
+            var euler = player.rotation.eulerAngles;
+            if(euler.y is >= 0 and < 45)
+            {
+                currentControlState = ControlState.North;
+            }
+            else if(euler.y is >= 45 and < 135)
+            {
+                currentControlState = ControlState.East;
+            }
+            else if(euler.y is >= 135 and < 225)
+            {
+                currentControlState = ControlState.South;
+            }
+            else if(euler.y is >= 255 and < 315)
+            {
+                currentControlState = ControlState.West;
+            }
+            else if(euler.y is >= 315 and <= 360)
+            {
+                currentControlState = ControlState.North;
+            }
+        }
         
         // Move Crane
         if (craneState is CraneState.IDLE or CraneState.MOVING) {
-            if (k.leftArrowKey.wasPressedThisFrame) {
-                SetTargetPos(gridPos.x - 1, gridPos.y);
-            } else if (k.rightArrowKey.wasPressedThisFrame) {
-                SetTargetPos(gridPos.x + 1, gridPos.y);
-            } else if (k.upArrowKey.wasPressedThisFrame) {
-                SetTargetPos(gridPos.x, gridPos.y + 1);
-            } else if (k.downArrowKey.wasPressedThisFrame) {
-                SetTargetPos(gridPos.x, gridPos.y - 1);
+
+            if (currentControlState == ControlState.North)
+            {
+                if (k.leftArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x - 1, gridPos.y);
+                } else if (k.rightArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x + 1, gridPos.y);
+                } else if (k.upArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x, gridPos.y + 1);
+                } else if (k.downArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x, gridPos.y - 1);
+                }
+            }
+            else if (currentControlState == ControlState.South)
+            {
+                if (k.leftArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x + 1, gridPos.y);
+                } else if (k.rightArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x - 1, gridPos.y);
+                } else if (k.upArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x, gridPos.y - 1);
+                } else if (k.downArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x, gridPos.y + 1);
+                }
+            }
+            else if (currentControlState == ControlState.East)
+            {
+                if (k.leftArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x, gridPos.y + 1);
+                } else if (k.rightArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x, gridPos.y - 1);
+                } else if (k.upArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x + 1, gridPos.y);
+                } else if (k.downArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x - 1, gridPos.y);
+                }
+            }
+            else if (currentControlState == ControlState.West)
+            {
+                if (k.leftArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x, gridPos.y - 1);
+                } else if (k.rightArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x, gridPos.y + 1);
+                } else if (k.upArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x - 1, gridPos.y);
+                } else if (k.downArrowKey.wasPressedThisFrame) {
+                    SetTargetPos(gridPos.x + 1, gridPos.y);
+                }
             }
         }
         
