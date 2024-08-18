@@ -6,16 +6,23 @@ using UnityEngine;
 public class TetrominoColor : MonoBehaviour
 {
 
-    private GameState _gameState;
 
     [SerializeField]
     private List<MeshRenderer> meshRenderers;
     private TetrominoGroupBase _tetromino;
 
+
+    [Header("Scafolding Colors")]
+    public List<Material> tetrominoScafoldingMaterials;
+
     void Awake()
     {
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         _tetromino = GetComponent<TetrominoGroupBase>();
-        _gameState = FindObjectOfType<GameState>();
         meshRenderers = new List<MeshRenderer>();
 
         List<Tetromino> myTetrominos = new List<Tetromino>();
@@ -25,11 +32,7 @@ public class TetrominoColor : MonoBehaviour
         {
             meshRenderers.Add(tet.outlineMesh);
         }
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
         if (_tetromino.Type == Tetromino.TetrominoType.Scaffold)
         {
             NextPaint();
@@ -51,10 +54,9 @@ public class TetrominoColor : MonoBehaviour
         }
     }
 
-
     private Material NextColor()
     {
-        return _gameState.tetrominoScafoldingMaterials[UnityEngine.Random.Range(0, _gameState.tetrominoScafoldingMaterials.Count - 1)];
+        return tetrominoScafoldingMaterials[UnityEngine.Random.Range(0, tetrominoScafoldingMaterials.Count - 1)];
     }
 
 }

@@ -4476,7 +4476,7 @@ MonoBehaviour:
   text: {fileID: 5746089719321408523}
   showFPS: 1
   showLog: 1
-  showWholeStackTrace: 1
+  showWholeStackTrace: 0
   writeLogToFile: 1
 --- !u!1 &8656056858381538998
 GameObject:
