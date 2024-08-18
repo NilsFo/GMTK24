@@ -7,21 +7,21 @@ using UnityEngine.InputSystem;
 public class Crane : MonoBehaviour {
     public Grid3D grid;
     public TetrominoSpawner tetroSpawner;
-    public Transform player;
-    
+    private GameState _gameState;
+
     public Transform kranschiene, laufkatze, seil;
 
     public AudioSource craneMoveSFX;
-    
+
     public float yLevel = 10f;
     public Vector2Int gridPos;
 
     public float speed = 1f;
     public float rotationSpeed = 180f;
-    
+
     public Quaternion grabTargetRotation;
     public Transform harken;
-    
+
     public enum CraneState {
         MOVING,
         ROTATING,
@@ -37,8 +37,7 @@ public class Crane : MonoBehaviour {
     public AnimationCurve speedCurve;
     public float speedCurveWidth = 2f;
 
-    public enum ControlState
-    {
+    public enum ControlState {
         North,
         South,
         East,
@@ -47,11 +46,9 @@ public class Crane : MonoBehaviour {
 
     public ControlState currentControlState = ControlState.North;
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
+        _gameState = FindObjectOfType<GameState>();
         var targetPos = grid.LocalToWorld(new Vector3Int(gridPos.x, 0, gridPos.y));
-        
-        player = GameObject.FindGameObjectsWithTag("Player")[0].transform;
         targetPos.y = yLevel;
         transform.localPosition = targetPos;
     }
@@ -62,50 +59,42 @@ public class Crane : MonoBehaviour {
 
         if (craneState is CraneState.IDLE or CraneState.MOVING) {
             var targetPos = grid.LocalToWorld(new Vector3Int(gridPos.x, 0, gridPos.y));
-            
+
             targetPos.y = yLevel;
             var speedMod = speedCurve.Evaluate(Vector3.Distance(transform.position, targetPos) / speedCurveWidth) * speed;
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speedMod * Time.deltaTime);
-            
-            if(Vector3.Distance(transform.position, targetPos) < 0.01f) {
+
+            if (Vector3.Distance(transform.position, targetPos) < 0.01f) {
                 craneState = CraneState.IDLE;
                 craneMoveSFX.volume = 0.0f;
             } else {
                 craneState = CraneState.MOVING;
                 craneMoveSFX.volume = 1.0f;
             }
-        }
-
-        else if (craneState is CraneState.NEW_TILE) {
+        } else if (craneState is CraneState.NEW_TILE) {
             var targetPos = tetroSpawner.transform.position;
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime * 2);
 
             if (Vector3.Distance(transform.position, targetPos) < 0.01f) {
                 GrabNewScaffold();
             }
-        }
-        
-        else if (craneState is CraneState.GRABBING) {
+        } else if (craneState is CraneState.GRABBING) {
             var targetPos = grabPoint;
-            
+
             var speedMod = speedCurve.Evaluate(Vector3.Distance(transform.position, targetPos) / speedCurveWidth / 2f) * speed;
 
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speedMod * Time.deltaTime);
-            
+
             if (Vector3.Distance(transform.position, targetPos) < 0.01f) {
                 GrabComplete();
             }
-        } else if (craneState is CraneState.ROTATING)
-        {
+        } else if (craneState is CraneState.ROTATING) {
             if (!harken) craneState = CraneState.IDLE;
             float diff = Quaternion.Angle(harken.rotation, grabTargetRotation);
-            if (diff < 0.1f)
-            {
+            if (diff < 0.1f) {
                 harken.rotation = grabTargetRotation;
                 craneState = CraneState.IDLE;
-            }
-            else
-            {
+            } else {
                 harken.rotation = Quaternion.RotateTowards(harken.rotation, grabTargetRotation, rotationSpeed * Time.deltaTime);
             }
         }
@@ -120,7 +109,7 @@ public class Crane : MonoBehaviour {
     public void SetTargetPos(int x, int y) {
         SetTargetPos(new Vector2Int(x, y));
     }
-    
+
     public void SetTargetPos(Vector2Int pos) {
         var gridSize = grid.GetSize();
         if (pos.x >= 0 && pos.x < gridSize.x && pos.y >= 0 && pos.y < gridSize.y) {
@@ -128,14 +117,14 @@ public class Crane : MonoBehaviour {
             gridPos.y = pos.y;
 
             if (grabbedTile != null) {
-                
+
                 var blockHeight = grabbedTile.GetBlockHeight();
                 var height = 0f;
                 var centerpoints = grabbedTile.GetLocalShapeCenterPoints();
                 foreach (var centerpoint in centerpoints) {
                     var c = grid.WorldToLocal(centerpoint + grid.LocalToWorld(new Vector3Int(gridPos.x, 0, gridPos.y)));
                     height = Mathf.Max(
-                        height, 
+                        height,
                         grid.GetHighestEmptyCell(new Vector2Int(c.x, c.z)).y
                     );
                 }
@@ -151,12 +140,12 @@ public class Crane : MonoBehaviour {
     }
 
     public void GrabNewScaffold() {
-        
+
         grabbedTile = tetroSpawner.Next().GetComponent<TetrominoGroupBase>();
         grabbedTile.transform.parent = transform;
-        grabbedTile.transform.localPosition = new Vector3(0, -3, 0);  // TODO correct for anchor pos
+        grabbedTile.transform.localPosition = new Vector3(0, -3, 0); // TODO correct for anchor pos
         grabbedTile._state = TetrominoGroupBase.State.Grabbed;
-        
+
         craneState = CraneState.MOVING;
         Invoke(nameof(ResetTargetPos), 0.1f);
     }
@@ -181,7 +170,7 @@ public class Crane : MonoBehaviour {
             if (tetromino != null) {
                 grabbedTile = tetromino;
                 grabbedTile.transform.parent = transform;
-                grabbedTile.transform.localPosition = new Vector3(0, 0, 0) - tetromino.GetAnchorPoint().transform.localPosition;  // TODO correct for anchor pos & animate
+                grabbedTile.transform.localPosition = new Vector3(0, 0, 0) - tetromino.GetAnchorPoint().transform.localPosition; // TODO correct for anchor pos & animate
 
                 Debug.Log("Grabbed piece " + grabbedTile.gameObject.name, grabbedTile);
                 craneState = CraneState.MOVING;
@@ -196,7 +185,7 @@ public class Crane : MonoBehaviour {
     }
 
     public void Drop() {
-        if(grabbedTile == null)
+        if (grabbedTile == null)
             return;
         bool success = grabbedTile.DropPiece();
         if (success) {
@@ -207,29 +196,20 @@ public class Crane : MonoBehaviour {
     }
 
     public void Rotate() {
-        if(craneState != CraneState.IDLE || !HasGrabbedTile())
+        if (craneState != CraneState.IDLE || !HasGrabbedTile())
             return;
         grabbedTile.RotateRight();
         var euler = harken.rotation.eulerAngles;
-        Quaternion nextRota = Quaternion.Euler(-90,0,0);
-        if(euler.y is >= 0 and < 45)
-        {
+        Quaternion nextRota = Quaternion.Euler(-90, 0, 0);
+        if (euler.y is >= 0 and < 45) {
             nextRota = Quaternion.Euler(euler.x, 90, euler.z);
-        }
-        else if(euler.y is >= 45 and < 135)
-        {
+        } else if (euler.y is >= 45 and < 135) {
             nextRota = Quaternion.Euler(euler.x, 180, euler.z);
-        }
-        else if(euler.y is >= 135 and < 225)
-        {
+        } else if (euler.y is >= 135 and < 225) {
             nextRota = Quaternion.Euler(euler.x, 270, euler.z);
-        }
-        else if(euler.y is >= 255 and < 315)
-        {
+        } else if (euler.y is >= 255 and < 315) {
             nextRota = Quaternion.Euler(euler.x, 0, euler.z);
-        }
-        else if(euler.y is >= 315 and <= 360)
-        {
+        } else if (euler.y is >= 315 and <= 360) {
             nextRota = Quaternion.Euler(euler.x, 90, euler.z);
         }
         grabTargetRotation = nextRota;
@@ -243,36 +223,25 @@ public class Crane : MonoBehaviour {
     private void HandleInput() {
         var k = Keyboard.current;
 
-        if (craneState is CraneState.IDLE)
-        {
-            var euler = player.rotation.eulerAngles;
-            if(euler.y is >= 0 and < 45)
-            {
+        if (craneState is CraneState.IDLE) {
+            var euler = _gameState.player.transform.rotation.eulerAngles;
+            if (euler.y is >= 0 and < 45) {
                 currentControlState = ControlState.North;
-            }
-            else if(euler.y is >= 45 and < 135)
-            {
+            } else if (euler.y is >= 45 and < 135) {
                 currentControlState = ControlState.East;
-            }
-            else if(euler.y is >= 135 and < 225)
-            {
+            } else if (euler.y is >= 135 and < 225) {
                 currentControlState = ControlState.South;
-            }
-            else if(euler.y is >= 255 and < 315)
-            {
+            } else if (euler.y is >= 255 and < 315) {
                 currentControlState = ControlState.West;
-            }
-            else if(euler.y is >= 315 and <= 360)
-            {
+            } else if (euler.y is >= 315 and <= 360) {
                 currentControlState = ControlState.North;
             }
         }
-        
+
         // Move Crane
         if (craneState is CraneState.IDLE or CraneState.MOVING) {
 
-            if (currentControlState == ControlState.North)
-            {
+            if (currentControlState == ControlState.North) {
                 if (k.leftArrowKey.wasPressedThisFrame) {
                     SetTargetPos(gridPos.x - 1, gridPos.y);
                 } else if (k.rightArrowKey.wasPressedThisFrame) {
@@ -282,9 +251,7 @@ public class Crane : MonoBehaviour {
                 } else if (k.downArrowKey.wasPressedThisFrame) {
                     SetTargetPos(gridPos.x, gridPos.y - 1);
                 }
-            }
-            else if (currentControlState == ControlState.South)
-            {
+            } else if (currentControlState == ControlState.South) {
                 if (k.leftArrowKey.wasPressedThisFrame) {
                     SetTargetPos(gridPos.x + 1, gridPos.y);
                 } else if (k.rightArrowKey.wasPressedThisFrame) {
@@ -294,9 +261,7 @@ public class Crane : MonoBehaviour {
                 } else if (k.downArrowKey.wasPressedThisFrame) {
                     SetTargetPos(gridPos.x, gridPos.y + 1);
                 }
-            }
-            else if (currentControlState == ControlState.East)
-            {
+            } else if (currentControlState == ControlState.East) {
                 if (k.leftArrowKey.wasPressedThisFrame) {
                     SetTargetPos(gridPos.x, gridPos.y + 1);
                 } else if (k.rightArrowKey.wasPressedThisFrame) {
@@ -306,9 +271,7 @@ public class Crane : MonoBehaviour {
                 } else if (k.downArrowKey.wasPressedThisFrame) {
                     SetTargetPos(gridPos.x - 1, gridPos.y);
                 }
-            }
-            else if (currentControlState == ControlState.West)
-            {
+            } else if (currentControlState == ControlState.West) {
                 if (k.leftArrowKey.wasPressedThisFrame) {
                     SetTargetPos(gridPos.x, gridPos.y - 1);
                 } else if (k.rightArrowKey.wasPressedThisFrame) {
@@ -320,7 +283,7 @@ public class Crane : MonoBehaviour {
                 }
             }
         }
-        
+
         // Rotate
         if (craneState is CraneState.IDLE or CraneState.MOVING) {
             if (k.rKey.wasPressedThisFrame) {
@@ -338,7 +301,7 @@ public class Crane : MonoBehaviour {
                 }
             }
         }
-        
+
         // Get Scaffold
         if (k.qKey.wasPressedThisFrame) {
             if (craneState is CraneState.IDLE or CraneState.MOVING && !HasGrabbedTile()) {
@@ -346,5 +309,5 @@ public class Crane : MonoBehaviour {
             }
         }
     }
-    
+
 }

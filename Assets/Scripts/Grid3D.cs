@@ -25,7 +25,7 @@ public class Grid3D : MonoBehaviour
 
     private void Awake()
     {
-        _grid = new TetrominoGroupBase[sizeX, sizeY, sizeZ];
+        CleanUpGrid();
     }
 
     private (int, bool) ToIndex(float pos, int min, int max)
@@ -186,6 +186,10 @@ public class Grid3D : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void CleanUpGrid() {
+        _grid = new TetrominoGroupBase[sizeX, sizeY, sizeZ];
     }
     
     [Obsolete]
