@@ -249,7 +249,7 @@ public class Grid3D : MonoBehaviour
                         Gizmos.color = Color.gray;
                     }
 
-                    Handles.Label(LocalToWorld(pos), statusString);
+                    //Handles.Label(LocalToWorld(pos), statusString);
                     Gizmos.DrawWireCube(LocalToWorld(pos), new Vector3(blockScaleX, blockScaleY, blockScaleZ) * 1f);
                 }
             }
