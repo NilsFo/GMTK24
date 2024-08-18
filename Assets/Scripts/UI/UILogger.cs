@@ -4,12 +4,14 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using System.IO;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class UILogger : MonoBehaviour
 {
     private string myLog;
     private List<LogObject> logList;
+    private string _outPath;
 
     private float fpsUpdateTimerCurrent = 0;
     private float fpsCache = 0;
@@ -18,10 +20,12 @@ public class UILogger : MonoBehaviour
     public TextMeshProUGUI text;
     public bool showFPS;
     public bool showLog;
-    public bool showWholeStackTrace=true;
+    public bool showWholeStackTrace = true;
+    public bool writeLogToFile = false;
 
     void Start()
     {
+        _outPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
         logList = new List<LogObject>();
         fpsUpdateTimerCurrent = 0;
         fpsCache = 0;
@@ -48,6 +52,13 @@ public class UILogger : MonoBehaviour
             newString = newString + "\n" + stackTrace;
         }
 
+        if (writeLogToFile)
+        {
+            string fileName = "Log_" + System.DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
+            string filePath = _outPath + "/" + fileName;
+            File.AppendAllLines(filePath, new[] { newString });
+        }
+
         if (logList != null && showLog)
         {
             logList.Add(new LogObject(newString));
@@ -69,7 +80,7 @@ public class UILogger : MonoBehaviour
         string logText = "";
         if (showFPS)
         {
-            logText = "FPS: " + (int) fpsCache;
+            logText = "FPS: " + (int)fpsCache;
         }
 
         float dt = Time.deltaTime;
