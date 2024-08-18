@@ -156,8 +156,9 @@ public class Grid3D : MonoBehaviour
         return _grid[index.x, index.y, index.z];
     }
 
-    public bool IsEmpty(Vector3Int index)
-    {
+    public bool IsEmpty(Vector3Int index) {
+        if (index.y < 0)
+            return false;
         return _grid[index.x, index.y, index.z] == null;
     }
 

@@ -64,6 +64,7 @@ public class TetrominoGroupBase : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] private AudioSource dropSFX;
+    [SerializeField] private ParticleSystem dropParticles;
     
     // Start is called before the first frame update
     void Start()
@@ -179,11 +180,23 @@ public class TetrominoGroupBase : MonoBehaviour
                 _grid.PlaceShape(this, currentCenterPointsOnGrid);
                 
                 // Drop Effects
+                
+                // Audio
                 dropSFX.Play();
+                
+                // Camera Shake
                 if(tetrominoType == Tetromino.TetrominoType.House)
                     FindObjectOfType<CameraShaker>().ShakeCamera(0.1f, 10, 0.5f);
                 else 
                     FindObjectOfType<CameraShaker>().ShakeCamera(0.05f, 10, 0.3f);
+                
+                // Patricles
+                foreach (var baseBlock in GetBaseBlocks()) {
+                    var below = _grid.WorldToLocal(baseBlock) + new Vector3Int(0, -1, 0);
+                    if (!_grid.IsEmpty(below)) {
+                        Instantiate(dropParticles, baseBlock + new Vector3(0, -1.5f, 0), Quaternion.AngleAxis(-90f, Vector3.right));
+                    }
+                }
             }
             else
             {
