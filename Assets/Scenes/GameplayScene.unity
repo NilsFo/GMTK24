@@ -1190,6 +1190,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1138722043293306475, guid: ca97fe48a5d733649b2fcedf14caebec,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4952029753783101293, guid: ca97fe48a5d733649b2fcedf14caebec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1891,6 +1896,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1955673018 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4952029753783101293, guid: ca97fe48a5d733649b2fcedf14caebec,
+    type: 3}
+  m_PrefabInstance: {fileID: 1237506193}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2115810860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2469,6 +2480,11 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 628389554}
+    - target: {fileID: 2125579804570384440, guid: 841e3ad6d0e7d0040ad4825d877ece41,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1955673018}
     - target: {fileID: 2125579804570384440, guid: 841e3ad6d0e7d0040ad4825d877ece41,
         type: 3}
       propertyPath: gridPos.x
