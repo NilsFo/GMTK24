@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour {
@@ -128,7 +129,7 @@ public class GameState : MonoBehaviour {
         }
 
         // TODD use input system
-        if (Input.GetKeyDown(KeyCode.Backspace)) {
+        if (Keyboard.current.backspaceKey.wasPressedThisFrame) {
             if (!IsWon()) {
                 if (currentPlayerState == PlayerState.Paused) {
                     currentPlayerState = PlayerState.Playing;
@@ -138,8 +139,7 @@ public class GameState : MonoBehaviour {
             }
         }
 
-        // TODO use input keys
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Keyboard.current.enterKey.wasPressedThisFrame) {
             if (currentPlayerState == PlayerState.Win || currentPlayerState == PlayerState.Paused) {
                 BackToMenu();
             }
@@ -193,13 +193,13 @@ public class GameState : MonoBehaviour {
         }
     }
 
-    void OnDisable(){
+    /*void OnDisable(){
         Debug.LogError("IS DISABLED");
     }
 
     void OnDestroy(){
         Debug.LogError("IS DESTROYED");
-    }
+    }*/
 
     [ContextMenu("Win")]
     public void TriggerWin() {

@@ -78,7 +78,7 @@ public class CharacterMovement : MonoBehaviour
         var keyboard = Keyboard.current;
         if (keyboard != null)
         {
-            if (keyboard.aKey.isPressed)
+            if (keyboard.aKey.isPressed || keyboard.qKey.isPressed)
             {
                 x -= 1;
             }
@@ -88,7 +88,7 @@ public class CharacterMovement : MonoBehaviour
                 x += 1;
             }
 
-            if (keyboard.wKey.isPressed)
+            if (keyboard.wKey.isPressed || keyboard.zKey.isPressed)
             {
                 z += 1;
             }
@@ -168,14 +168,14 @@ public class CharacterMovement : MonoBehaviour
             }
 
             // Crouching
-            if (keyboard.leftCtrlKey.wasPressedThisFrame && !crouching)
+            if (keyboard.cKey.wasPressedThisFrame && !crouching)
             {
                 crouching = true;
                 _controller.height = playerHeightCrouching;
                 _controller.center.Set(0, playerHeightCrouching / 2f, 0);
                 _camera.transform.localPosition = new Vector3(0, (playerHeightCrouching - _eyesToHeadDist) / 2, 0);
             }
-            else if ((keyboard.leftCtrlKey.wasPressedThisFrame || keyboard.spaceKey.wasPressedThisFrame ||
+            else if ((keyboard.cKey.wasPressedThisFrame || keyboard.spaceKey.wasPressedThisFrame ||
                       keyboard.shiftKey.wasPressedThisFrame) && crouching)
             {
                 var couldStandUp = StandUp();
@@ -224,7 +224,7 @@ public class CharacterMovement : MonoBehaviour
     }
 
     private void LadderUpdate() {
-        if (Keyboard.current.wKey.isPressed) {
+        if (Keyboard.current.wKey.isPressed || Keyboard.current.zKey.isPressed) {
             _controller.Move(Vector3.up * (maximumSpeed * Time.deltaTime));
         }
         if (Keyboard.current.sKey.isPressed) {
