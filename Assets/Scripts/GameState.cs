@@ -194,11 +194,11 @@ public class GameState : MonoBehaviour {
     }
 
     void OnDisable(){
-        Debug.LogError("IS DISABLED");
+        //Debug.LogError("IS DISABLED");
     }
 
     void OnDestroy(){
-        Debug.LogError("IS DESTROYED");
+        //Debug.LogError("IS DESTROYED");
     }
 
     [ContextMenu("Win")]
