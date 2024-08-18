@@ -94,7 +94,6 @@ public class Grid3D : MonoBehaviour
         for (int i = 0; i < pos.Length; i++)
         {
             result[i] = WorldToLocal(pos[i]);
-            Debug.Log("Pos: "+ pos[i].ToString() + " => " + result[i].ToString());
         }
         return result;
     }
