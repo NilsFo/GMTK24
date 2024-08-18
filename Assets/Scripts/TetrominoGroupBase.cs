@@ -161,7 +161,6 @@ public class TetrominoGroupBase : MonoBehaviour
                 if (canBePlaced)
                 {
                     lastValidIndex = nextIndex;
-                    Debug.Log(lastValidIndex);
                 }
             }
 
