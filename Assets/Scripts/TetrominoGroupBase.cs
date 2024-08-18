@@ -345,4 +345,26 @@ public class TetrominoGroupBase : MonoBehaviour
         
         return _grid.WorldToLocal(bestPos);
     }
+
+    public Vector3[] GetBaseBlocks()
+    {
+        var centerPoints = GetShapeCenterPoints();
+        Dictionary<string, Vector3> bestBlock = new Dictionary<string, Vector3>();
+        for (int i = 0; i < centerPoints.Length; i++)
+        {
+            var key = $"{centerPoints[i].x},{centerPoints[i].z}";
+            if (!bestBlock.ContainsKey(key))
+            {
+                bestBlock[key] = centerPoints[i];
+            }
+            else
+            {
+                if (bestBlock[key].y > centerPoints[i].y)
+                {
+                    bestBlock[key] = centerPoints[i];
+                }
+            }
+        }
+        return bestBlock.Values.ToArray();
+    }
 }
