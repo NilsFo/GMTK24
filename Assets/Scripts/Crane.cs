@@ -16,9 +16,14 @@ public class Crane : MonoBehaviour {
     public Vector2Int gridPos;
 
     public float speed = 1f;
-
+    public float rotationSpeed = 180f;
+    
+    public Quaternion grabTargetRotation;
+    public Transform harken;
+    
     public enum CraneState {
         MOVING,
+        ROTATING,
         NEW_TILE,
         GRABBING,
         IDLE
@@ -79,8 +84,21 @@ public class Crane : MonoBehaviour {
             if (Vector3.Distance(transform.position, targetPos) < 0.01f) {
                 GrabComplete();
             }
+        } else if (craneState is CraneState.ROTATING)
+        {
+            if (!harken) craneState = CraneState.IDLE;
+            float diff = Quaternion.Angle(harken.rotation, grabTargetRotation);
+            if (diff < 0.1f)
+            {
+                harken.rotation = grabTargetRotation;
+                craneState = CraneState.IDLE;
+            }
+            else
+            {
+                harken.rotation = Quaternion.RotateTowards(harken.rotation, grabTargetRotation, rotationSpeed * Time.deltaTime);
+            }
         }
-        
+
         // Visuals
         laufkatze.transform.position = new Vector3(transform.position.x, laufkatze.transform.position.y, transform.position.z);
         kranschiene.transform.localPosition = new Vector3(transform.localPosition.x, 0, 0);
@@ -178,8 +196,33 @@ public class Crane : MonoBehaviour {
     }
 
     public void Rotate() {
-        if(HasGrabbedTile())
-            grabbedTile.RotateRight();
+        if(craneState != CraneState.IDLE || !HasGrabbedTile())
+            return;
+        grabbedTile.RotateRight();
+        var euler = harken.rotation.eulerAngles;
+        Quaternion nextRota = Quaternion.Euler(-90,0,0);
+        if(euler.y is >= 0 and < 45)
+        {
+            nextRota = Quaternion.Euler(euler.x, 90, euler.z);
+        }
+        else if(euler.y is >= 45 and < 135)
+        {
+            nextRota = Quaternion.Euler(euler.x, 180, euler.z);
+        }
+        else if(euler.y is >= 135 and < 225)
+        {
+            nextRota = Quaternion.Euler(euler.x, 270, euler.z);
+        }
+        else if(euler.y is >= 255 and < 315)
+        {
+            nextRota = Quaternion.Euler(euler.x, 0, euler.z);
+        }
+        else if(euler.y is >= 315 and <= 360)
+        {
+            nextRota = Quaternion.Euler(euler.x, 90, euler.z);
+        }
+        grabTargetRotation = nextRota;
+        craneState = CraneState.ROTATING;
     }
 
     public bool HasGrabbedTile() {

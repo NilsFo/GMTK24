@@ -55,6 +55,9 @@ MonoBehaviour:
   yLevel: 10
   gridPos: {x: 0, y: 0}
   speed: 8
+  rotationSpeed: 180
+  grabTargetRotation: {x: 0, y: 0, z: 0, w: 0}
+  harken: {fileID: 7226712967793053299}
   craneState: 0
   grabbedTile: {fileID: 0}
   grabPoint: {x: 0, y: 0, z: 0}
@@ -831,7 +834,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0e26b8dfecbb1f34b8ad85f13d6c4ca7,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e26b8dfecbb1f34b8ad85f13d6c4ca7,
         type: 3}
@@ -846,12 +849,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0e26b8dfecbb1f34b8ad85f13d6c4ca7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e26b8dfecbb1f34b8ad85f13d6c4ca7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e26b8dfecbb1f34b8ad85f13d6c4ca7,
         type: 3}

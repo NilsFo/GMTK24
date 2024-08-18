@@ -2250,6 +2250,16 @@ PrefabInstance:
       objectReference: {fileID: 628389554}
     - target: {fileID: 2125579804570384440, guid: 841e3ad6d0e7d0040ad4825d877ece41,
         type: 3}
+      propertyPath: gridPos.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125579804570384440, guid: 841e3ad6d0e7d0040ad4825d877ece41,
+        type: 3}
+      propertyPath: gridPos.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125579804570384440, guid: 841e3ad6d0e7d0040ad4825d877ece41,
+        type: 3}
       propertyPath: tetroSpawner
       value: 
       objectReference: {fileID: 1000595620}
@@ -2262,6 +2272,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226712967793053299, guid: 841e3ad6d0e7d0040ad4825d877ece41,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226712967793053299, guid: 841e3ad6d0e7d0040ad4825d877ece41,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226712967793053299, guid: 841e3ad6d0e7d0040ad4825d877ece41,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226712967793053299, guid: 841e3ad6d0e7d0040ad4825d877ece41,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
