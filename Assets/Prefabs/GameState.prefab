@@ -58,11 +58,14 @@ MonoBehaviour:
   gameplayUI: {fileID: 0}
   winUI: {fileID: 0}
   pauseUI: {fileID: 0}
+  pauseGroup: {fileID: 0}
   levelTutorial: {fileID: 0}
   level1: {fileID: 0}
   level2: {fileID: 0}
   scaffoldingOutlineSolid: 0
   currentPlayerState: 1
+  fadeOutDelay: 3
+  fadeOutSpeed: 0.5
 --- !u!114 &8714150335718117701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,3 +151,4 @@ MonoBehaviour:
   fillSpeed: 1
   objectiveTarget: 0
   objectiveProgress: 0
+  winClip: {fileID: 8300000, guid: 29fd35358d5e75b48b82c14b9c68028e, type: 3}
