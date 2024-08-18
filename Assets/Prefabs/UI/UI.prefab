@@ -1089,7 +1089,7 @@ RectTransform:
   m_Father: {fileID: 7488443953317956180}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2159,7 +2159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3418596616925707756
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2211,22 +2211,23 @@ MonoBehaviour:
 
     Spacebar: Jump
 
-    LMB: Weld / Unweld
+    C: Toggle crouch
+
+    Shift: Sprint
+
+    LMB:
+    Weld / Unweld
 
 
-    Arrow Keys:
-    Move Crane
-
+    Arrow Keys: Move Crane
 
     E: Pick Up / Drop
 
-    Q: Grab Scaffold
+    R: Rotate
+    grabbed
 
-    R: Rotate grabbed
 
-
-    Backspace:
-    Pause'
+    Backspace: Pause'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55454ebe68c5d1943957301df6a5e69a, type: 2}
   m_sharedMaterial: {fileID: -298186222485745825, guid: 55454ebe68c5d1943957301df6a5e69a,
@@ -2260,7 +2261,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
@@ -2851,7 +2852,7 @@ RectTransform:
   m_Father: {fileID: 3438780267725242801}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2910,7 +2911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6713138643066610560
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2962,22 +2963,23 @@ MonoBehaviour:
 
     Spacebar: Jump
 
-    LMB: Weld / Unweld
+    C: Toggle crouch
+
+    Shift: Sprint
+
+    LMB:
+    Weld / Unweld
 
 
-    Arrow Keys:
-    Move Crane
-
+    Arrow Keys: Move Crane
 
     E: Pick Up / Drop
 
-    Q: Grab Scaffold
+    R: Rotate
+    grabbed
 
-    R: Rotate grabbed
 
-
-    Backspace:
-    Pause'
+    Backspace: Pause'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55454ebe68c5d1943957301df6a5e69a, type: 2}
   m_sharedMaterial: {fileID: -298186222485745825, guid: 55454ebe68c5d1943957301df6a5e69a,
@@ -3005,13 +3007,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
@@ -3215,7 +3217,7 @@ RectTransform:
   m_Father: {fileID: 3972804805137685419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.0000076293945, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4081,7 +4083,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7387242536823456000
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4343,7 +4345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3819316519042369739
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4641,7 +4643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &190437643189045043
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4789,7 +4791,7 @@ PrefabInstance:
     - target: {fileID: 469646242718217868, guid: 9236ee62c8d2b5c4f9ee7e97fc156884,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 589419782415624213, guid: 9236ee62c8d2b5c4f9ee7e97fc156884,
         type: 3}
@@ -4899,7 +4901,7 @@ PrefabInstance:
     - target: {fileID: 8347496149350843580, guid: 9236ee62c8d2b5c4f9ee7e97fc156884,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
