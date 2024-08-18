@@ -64,6 +64,7 @@ public class TetrominoGroupBase : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] private AudioSource dropSFX;
+    [SerializeField] private ParticleSystem dropParticles;
     
     // Start is called before the first frame update
     void Start()
@@ -129,6 +130,7 @@ public class TetrominoGroupBase : MonoBehaviour
             else
             {
                 Vector3Int[] result = _grid.ConvertToLocal(GetShapeCenterPoints());
+                transform.position = _grid.LocalToWorld(currentIndex);
                 _grid.PlaceShape(this, result);
                 _state = State.Placed;
             }
@@ -164,7 +166,6 @@ public class TetrominoGroupBase : MonoBehaviour
                 if (canBePlaced)
                 {
                     lastValidIndex = nextIndex;
-                    Debug.Log(lastValidIndex);
                 }
             }
 
@@ -179,7 +180,24 @@ public class TetrominoGroupBase : MonoBehaviour
                 Vector3Int[] currentCenterPointsOnGrid = _grid.ConvertToLocal(GetShapeCenterPoints());
                 _grid.PlaceShape(this, currentCenterPointsOnGrid);
                 
+                // Drop Effects
+                
+                // Audio
                 dropSFX.Play();
+                
+                // Camera Shake
+                if(tetrominoType == Tetromino.TetrominoType.House)
+                    FindObjectOfType<CameraShaker>().ShakeCamera(0.1f, 10, 0.5f);
+                else 
+                    FindObjectOfType<CameraShaker>().ShakeCamera(0.05f, 10, 0.3f);
+                
+                // Patricles
+                foreach (var baseBlock in GetBaseBlocks()) {
+                    var below = _grid.WorldToLocal(baseBlock) + new Vector3Int(0, -1, 0);
+                    if (!_grid.IsEmpty(below)) {
+                        Instantiate(dropParticles, baseBlock + new Vector3(0, -1.5f, 0), Quaternion.AngleAxis(-90f, Vector3.right));
+                    }
+                }
             }
             else
             {
@@ -345,5 +363,27 @@ public class TetrominoGroupBase : MonoBehaviour
         }
         
         return _grid.WorldToLocal(bestPos);
+    }
+
+    public Vector3[] GetBaseBlocks()
+    {
+        var centerPoints = GetShapeCenterPoints();
+        Dictionary<string, Vector3> bestBlock = new Dictionary<string, Vector3>();
+        for (int i = 0; i < centerPoints.Length; i++)
+        {
+            var key = $"{centerPoints[i].x},{centerPoints[i].z}";
+            if (!bestBlock.ContainsKey(key))
+            {
+                bestBlock[key] = centerPoints[i];
+            }
+            else
+            {
+                if (bestBlock[key].y > centerPoints[i].y)
+                {
+                    bestBlock[key] = centerPoints[i];
+                }
+            }
+        }
+        return bestBlock.Values.ToArray();
     }
 }

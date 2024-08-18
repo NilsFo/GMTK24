@@ -187,6 +187,8 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   dropSFX: {fileID: 8514046173424570454}
+  dropParticles: {fileID: 8974537869539687581, guid: 5e28aa42a0d59d04785ca69e75c76e34,
+    type: 3}
 --- !u!114 &2345365630228882218
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -154,7 +154,8 @@ MonoBehaviour:
   binningVolumeMult: 0.15
   musicFadeSpeed: 1
   initiallyKnownSongs:
-  - {fileID: 8300000, guid: 5e662b811388548439f75708dc29ebbe, type: 3}
+  - {fileID: 8300000, guid: 06dace64eddf5074e8ae3095ef0e6607, type: 3}
+  - {fileID: 8300000, guid: 2de869192372d5f4d9ecc99c19a1d726, type: 3}
 --- !u!1 &7764112760404233399
 GameObject:
   m_ObjectHideFlags: 0

@@ -151,6 +151,17 @@ public class Grid3D : MonoBehaviour
         return new Vector3(blockScaleX, blockScaleY, blockScaleZ);
     }
 
+    public TetrominoGroupBase Get(Vector3Int index)
+    {
+        return _grid[index.x, index.y, index.z];
+    }
+
+    public bool IsEmpty(Vector3Int index) {
+        if (index.y < 0)
+            return false;
+        return _grid[index.x, index.y, index.z] == null;
+    }
+
     public Vector3 GetHighestEmptyCell(Vector2Int index)
     {
         for (int i = sizeY-1; i >= 0; i--)
@@ -238,7 +249,7 @@ public class Grid3D : MonoBehaviour
                         Gizmos.color = Color.gray;
                     }
 
-                    Handles.Label(LocalToWorld(pos), statusString);
+                    //Handles.Label(LocalToWorld(pos), statusString);
                     Gizmos.DrawWireCube(LocalToWorld(pos), new Vector3(blockScaleX, blockScaleY, blockScaleZ) * 1f);
                 }
             }
