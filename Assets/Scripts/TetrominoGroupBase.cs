@@ -17,7 +17,6 @@ public class TetrominoGroupBase : MonoBehaviour
         Rotating,
         Placed,
         Grabbed,
-        Welded,
         Faulty
     }
 
@@ -162,6 +161,7 @@ public class TetrominoGroupBase : MonoBehaviour
                 if (canBePlaced)
                 {
                     lastValidIndex = nextIndex;
+                    Debug.Log(lastValidIndex);
                 }
             }
 
@@ -304,5 +304,20 @@ public class TetrominoGroupBase : MonoBehaviour
     public GameObject GetAnchorPoint()
     {
         return anchorePoint;
+    }
+
+    public Vector3Int GetCurrentBestIndex()
+    {
+        var centerPoints = GetShapeCenterPoints();
+        Vector3 bestPos = Vector3.positiveInfinity;
+        for (int i = 0; i < centerPoints.Length; i++)
+        {
+            if (centerPoints[i].magnitude < bestPos.magnitude)
+            {
+                bestPos = centerPoints[i];
+            }
+        }
+        
+        return _grid.WorldToLocal(bestPos);
     }
 }

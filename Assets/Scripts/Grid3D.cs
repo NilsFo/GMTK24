@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -30,9 +31,9 @@ public class Grid3D : MonoBehaviour
     private (int, bool) ToIndex(float pos, int min, int max)
     {
         bool isNotInside = false;
-        float reminderX = pos % blockScaleX;
-        int index = (int)((pos - reminderX) / blockScaleX);
-        if (reminderX < 0) index += 1;
+        int posInInt = Mathf.RoundToInt(pos);
+        int index = (int)(posInInt / blockScaleX);
+        
         if (index < min)
         {
             index = min;
@@ -93,6 +94,7 @@ public class Grid3D : MonoBehaviour
         for (int i = 0; i < pos.Length; i++)
         {
             result[i] = WorldToLocal(pos[i]);
+            Debug.Log("Pos: "+ pos[i].ToString() + " => " + result[i].ToString());
         }
         return result;
     }
@@ -237,7 +239,7 @@ public class Grid3D : MonoBehaviour
                         Gizmos.color = Color.gray;
                     }
 
-                    //Handles.Label(LocalToWorld(pos), statusString);
+                    Handles.Label(LocalToWorld(pos), statusString);
                     Gizmos.DrawWireCube(LocalToWorld(pos), new Vector3(blockScaleX, blockScaleY, blockScaleZ) * 1f);
                 }
             }
