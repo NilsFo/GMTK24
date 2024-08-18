@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283d4d340632cf543862165d95c4e6ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivitySettings: 0.2
+  sensitivitySettings: 0.5
   sensitivityScaling: 2
   mouseLookEnabled: 1
   clampInDegrees: {x: 360, y: 180}
