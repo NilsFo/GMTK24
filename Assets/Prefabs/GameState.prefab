@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &24506012214098581
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3504431442451018000}
+  - component: {fileID: 9135845584871262222}
+  m_Layer: 0
+  m_Name: TakeScreenshot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3504431442451018000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24506012214098581}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7031559503903871509}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9135845584871262222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24506012214098581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af2608bd103ec9458b80680426bd675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editorOnly: 1
+  autoScreenshotSize: 0
+  width: 1920
+  height: 1080
+  captureKey: 13
+  textureFormat: 3
 --- !u!1 &2826267985517607357
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +60,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7031559503903871509}
   - component: {fileID: 5706283700379175552}
-  - component: {fileID: 8714150335718117701}
   - component: {fileID: 714466897107274834}
   m_Layer: 0
   m_Name: GameState
@@ -33,6 +82,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7423843944389806105}
+  - {fileID: 3504431442451018000}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5706283700379175552
@@ -47,43 +97,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80642af5ab8ec7c46ada7067b4f641fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tetrominoScafoldingMaterials:
-  - {fileID: 2100000, guid: c618425f24b41b742a9154e182389d10, type: 2}
-  - {fileID: 2100000, guid: 0d2947575bd78274c8d81ff5955f1461, type: 2}
-  - {fileID: 2100000, guid: e6f147f17d77cdb419980a29ec765036, type: 2}
-  - {fileID: 2100000, guid: d3279fd7a4ae66849ab1f36b27761681, type: 2}
-  - {fileID: 2100000, guid: 3c45964e006b9df4ab135d8839df8339, type: 2}
-  - {fileID: 2100000, guid: 0802f0394a6f704449b1adec0561ec9a, type: 2}
-  - {fileID: 2100000, guid: 57d1131df38a1304d94752a5f2a9df3d, type: 2}
   gameplayUI: {fileID: 0}
+  menuUI: {fileID: 0}
   winUI: {fileID: 0}
   pauseUI: {fileID: 0}
   pauseGroup: {fileID: 0}
+  cameraHolders: {fileID: 0}
+  player: {fileID: 0}
+  levelMainMenu: {fileID: 0}
   levelTutorial: {fileID: 0}
   level1: {fileID: 0}
   level2: {fileID: 0}
+  level3: {fileID: 0}
+  level4: {fileID: 0}
   scaffoldingOutlineSolid: 0
   currentPlayerState: 1
   fadeOutDelay: 3
   fadeOutSpeed: 0.5
---- !u!114 &8714150335718117701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2826267985517607357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5af2608bd103ec9458b80680426bd675, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  editorOnly: 1
-  autoScreenshotSize: 0
-  width: 1920
-  height: 1080
-  captureKey: 13
-  textureFormat: 3
 --- !u!114 &714466897107274834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 0}
-  virtualCamera: {fileID: 0}
   cameraShakeDuration: 0
   amplitudeGainTarget: 0
   frequencyGainTarget: 0

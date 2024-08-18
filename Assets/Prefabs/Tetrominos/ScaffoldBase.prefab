@@ -103,7 +103,13 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: c618425f24b41b742a9154e182389d10, type: 2}
+  - {fileID: 2100000, guid: 0d2947575bd78274c8d81ff5955f1461, type: 2}
+  - {fileID: 2100000, guid: e6f147f17d77cdb419980a29ec765036, type: 2}
+  - {fileID: 2100000, guid: d3279fd7a4ae66849ab1f36b27761681, type: 2}
+  - {fileID: 2100000, guid: 3c45964e006b9df4ab135d8839df8339, type: 2}
+  - {fileID: 2100000, guid: 0802f0394a6f704449b1adec0561ec9a, type: 2}
+  - {fileID: 2100000, guid: 57d1131df38a1304d94752a5f2a9df3d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -142,7 +148,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30

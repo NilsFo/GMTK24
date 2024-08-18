@@ -14,9 +14,6 @@ public class GameState : MonoBehaviour {
         Win
     }
 
-    [Header("Scafolding Colors")]
-    public List<Material> tetrominoScafoldingMaterials;
-
     [Header("World hookup")]
     public GameObject gameplayUI;
     public GameObject menuUI;
@@ -194,6 +191,14 @@ public class GameState : MonoBehaviour {
             pauseUI.SetActive(false);
             menuUI.SetActive(false);
         }
+    }
+
+    void OnDisable(){
+        Debug.LogError("IS DISABLED");
+    }
+
+    void OnDestroy(){
+        Debug.LogError("IS DESTROYED");
     }
 
     [ContextMenu("Win")]
