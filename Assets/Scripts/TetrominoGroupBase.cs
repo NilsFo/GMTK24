@@ -234,7 +234,28 @@ public class TetrominoGroupBase : MonoBehaviour
         if (_state == State.Grabbed)
         {
             var euler = transform.rotation.eulerAngles;
-            targetRotation = Quaternion.Euler(euler.x, euler.y + 90, euler.z);
+            Quaternion nextRota = Quaternion.Euler(0,0,0);
+            if(euler.y is >= 0 and < 45)
+            {
+                nextRota = Quaternion.Euler(euler.x, 90, euler.z);
+            }
+            else if(euler.y is >= 45 and < 135)
+            {
+                nextRota = Quaternion.Euler(euler.x, 180, euler.z);
+            }
+            else if(euler.y is >= 135 and < 225)
+            {
+                nextRota = Quaternion.Euler(euler.x, 270, euler.z);
+            }
+            else if(euler.y is >= 255 and < 315)
+            {
+                nextRota = Quaternion.Euler(euler.x, 0, euler.z);
+            }
+            else if(euler.y is >= 315 and <= 360)
+            {
+                nextRota = Quaternion.Euler(euler.x, 90, euler.z);
+            }
+            targetRotation = nextRota;
             _state = State.Rotating;
         }
     }

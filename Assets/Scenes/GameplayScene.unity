@@ -2471,6 +2471,16 @@ PrefabInstance:
       objectReference: {fileID: 628389554}
     - target: {fileID: 2125579804570384440, guid: 841e3ad6d0e7d0040ad4825d877ece41,
         type: 3}
+      propertyPath: gridPos.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125579804570384440, guid: 841e3ad6d0e7d0040ad4825d877ece41,
+        type: 3}
+      propertyPath: gridPos.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125579804570384440, guid: 841e3ad6d0e7d0040ad4825d877ece41,
+        type: 3}
       propertyPath: tetroSpawner
       value: 
       objectReference: {fileID: 1000595620}
