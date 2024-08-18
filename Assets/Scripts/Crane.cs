@@ -10,6 +10,8 @@ public class Crane : MonoBehaviour {
     public Transform player;
     
     public Transform kranschiene, laufkatze, seil;
+
+    public AudioSource craneMoveSFX;
     
     public float yLevel = 10f;
     public Vector2Int gridPos;
@@ -67,8 +69,10 @@ public class Crane : MonoBehaviour {
             
             if(Vector3.Distance(transform.position, targetPos) < 0.01f) {
                 craneState = CraneState.IDLE;
+                craneMoveSFX.volume = 0.0f;
             } else {
                 craneState = CraneState.MOVING;
+                craneMoveSFX.volume = 1.0f;
             }
         }
 

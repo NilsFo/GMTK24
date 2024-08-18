@@ -53,7 +53,7 @@ public class MouseLook : MonoBehaviour
         }
         
         // Updating sensitivity
-        _sensitivitySettings = sensitivitySettings * Mathf.Pow(sensitivityScaling, sensitivitySettings);
+        _sensitivitySettings = sensitivitySettings * Mathf.Pow(sensitivitySettings, sensitivityScaling) + 0.01f;
         _sensitivitySettings = Mathf.Clamp(_sensitivitySettings, 0.01f, sensitivityScaling);
 
         // Allow the script to clamp based on a desired target value.
