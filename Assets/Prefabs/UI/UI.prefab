@@ -2159,7 +2159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3418596616925707756
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2910,7 +2910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6713138643066610560
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4784,6 +4784,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7387242536823456000}
     m_Modifications:
+    - target: {fileID: 469646242718217868, guid: 9236ee62c8d2b5c4f9ee7e97fc156884,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 589419782415624213, guid: 9236ee62c8d2b5c4f9ee7e97fc156884,
         type: 3}
       propertyPath: m_Name
@@ -4887,6 +4892,11 @@ PrefabInstance:
     - target: {fileID: 2750682567163048875, guid: 9236ee62c8d2b5c4f9ee7e97fc156884,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8347496149350843580, guid: 9236ee62c8d2b5c4f9ee7e97fc156884,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
