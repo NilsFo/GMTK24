@@ -28,6 +28,11 @@ public class ObjectiveLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateWinTarget();
+    }
+
+    public void UpdateWinTarget()
+    {
         var weldPoints = FindObjectsOfType<WeldPoint>();
         objectiveTarget = weldPoints.Length / 2;
     }
@@ -50,10 +55,10 @@ public class ObjectiveLogic : MonoBehaviour
 
     public void CheckWin()
     {
-        if (objectiveProgress == objectiveTarget)
+        if (objectiveProgress == objectiveTarget && _gameState.currentPlayerState == GameState.PlayerState.Playing)
         {
             _gameState.TriggerWin();
-            _gameState.musicManager.CreateAudioClip(winClip, _gameState.transform.position, respectBinning:false);
+            // _gameState.musicManager.CreateAudioClip(winClip, _gameState.transform.position, respectBinning: false);
         }
     }
 

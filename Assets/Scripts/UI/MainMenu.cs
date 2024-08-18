@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     private LevelShare levelShare;
     public Slider slider;
     public MusicManager musicManager;
+    private GameState _gameState;
 
     // Start is called before the first frame update
     void Start()
@@ -27,28 +28,28 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        // Cursor.visible = true;
+        // Cursor.lockState = CursorLockMode.None;
         MusicManager.userDesiredMasterVolume = slider.value;
     }
 
-    public void Level1()
-    {
-        LevelShare.levelChoice = 1;
-        SceneManager.LoadScene("Scenes/GameplayScene");
-    }
-
-    public void Level2()
-    {
-        LevelShare.levelChoice = 2;
-        SceneManager.LoadScene("Scenes/GameplayScene");
-
-    }
-
-    public void LevelTutorial()
-    {
-        LevelShare.levelChoice = 0;
-        SceneManager.LoadScene("Scenes/GameplayScene");
-    }
+    // public void Level1()
+    // {
+    //     LevelShare.levelChoice = 1;
+    //     SceneManager.LoadScene("Scenes/GameplayScene");
+    // }
+    // 
+    // public void Level2()
+    // {
+    //     LevelShare.levelChoice = 2;
+    //     SceneManager.LoadScene("Scenes/GameplayScene");
+    // 
+    // }
+    // 
+    // public void LevelTutorial()
+    // {
+    //     LevelShare.levelChoice = 0;
+    //     SceneManager.LoadScene("Scenes/GameplayScene");
+    // }
 
 }
