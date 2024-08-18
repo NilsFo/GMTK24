@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 6303228424352036071}
   - component: {fileID: 3335474299374269601}
   - component: {fileID: 1783780897838833269}
+  - component: {fileID: 8722355852636807662}
   m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -151,7 +152,7 @@ Camera:
   m_GameObject: {fileID: 1584802341187472089}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0.42707968, b: 1, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -267,6 +268,23 @@ MonoBehaviour:
   targetDirection: {x: 0, y: 0}
   targetCharacterDirection: {x: 0, y: 0}
   characterBody: {fileID: 1138722043293306475}
+--- !u!114 &8722355852636807662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584802341187472089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a50bc005b7c2a4e9d51dbd4ca139cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 5767911873431555216}
+  cameraShakeDuration: 0
+  amplitudeGainTarget: 0
+  frequencyGainTarget: 0
+  cameraShakeResetSpeed: 2
 --- !u!1 &4318419487809708493
 GameObject:
   m_ObjectHideFlags: 0

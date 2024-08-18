@@ -179,7 +179,12 @@ public class TetrominoGroupBase : MonoBehaviour
                 Vector3Int[] currentCenterPointsOnGrid = _grid.ConvertToLocal(GetShapeCenterPoints());
                 _grid.PlaceShape(this, currentCenterPointsOnGrid);
                 
+                // Drop Effects
                 dropSFX.Play();
+                if(tetrominoType == Tetromino.TetrominoType.House)
+                    FindObjectOfType<CameraShaker>().ShakeCamera(0.1f, 10, 0.5f);
+                else 
+                    FindObjectOfType<CameraShaker>().ShakeCamera(0.05f, 10, 0.3f);
             }
             else
             {
