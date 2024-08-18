@@ -151,6 +151,16 @@ public class Grid3D : MonoBehaviour
         return new Vector3(blockScaleX, blockScaleY, blockScaleZ);
     }
 
+    public TetrominoGroupBase Get(Vector3Int index)
+    {
+        return _grid[index.x, index.y, index.z];
+    }
+
+    public bool IsEmpty(Vector3Int index)
+    {
+        return _grid[index.x, index.y, index.z] == null;
+    }
+
     public Vector3 GetHighestEmptyCell(Vector2Int index)
     {
         for (int i = sizeY-1; i >= 0; i--)
