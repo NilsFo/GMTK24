@@ -105,7 +105,7 @@ public class Crane : MonoBehaviour {
         // Visuals
         laufkatze.transform.position = new Vector3(transform.position.x, laufkatze.transform.position.y, transform.position.z);
         kranschiene.transform.localPosition = new Vector3(transform.localPosition.x, 0, 0);
-        seil.transform.position = (transform.position + laufkatze.position) / 2;
+        seil.transform.position = (transform.position + laufkatze.position) / 2 + Vector3.up * 1f;
         seil.transform.localScale = new Vector3(seil.transform.localScale.x, Vector3.Distance(transform.position, laufkatze.position), seil.transform.localScale.z);
     }
 
