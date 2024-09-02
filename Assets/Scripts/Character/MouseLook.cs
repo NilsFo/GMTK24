@@ -7,20 +7,20 @@ public class MouseLook : MonoBehaviour
     private Vector2 _mouseAbsolute;
     private Vector2 _smoothMouse;
 
-    [Header("Player Settings")] [Range(0, 1)]public float sensitivitySettings = 0.5f;
+    [Header("Player Settings")] [Range(0, 1)]
+    public float sensitivitySettings = 0.5f;
+
     public float sensitivityScaling = 3;
     private float _sensitivitySettings;
-    
-    [Header("Editor Config")]
-    public bool mouseLookEnabled = true;
+
+    [Header("Editor Config")] public bool mouseLookEnabled = true;
 
     public Vector2 clampInDegrees = new Vector2(360, 180);
     public bool lockCursor;
     public Vector2 sensitivity = new Vector2(4, 4);
     public Vector2 smoothing = new Vector2(3, 3);
-    
-    [Header("Look Direction")]
-    public Vector2 targetDirection;
+
+    [Header("Look Direction")] public Vector2 targetDirection;
     public Vector2 targetCharacterDirection;
 
     // Assign this if there's a parent object controlling motion, such as a Character Controller.
@@ -51,7 +51,7 @@ public class MouseLook : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-        
+
         // Updating sensitivity
         _sensitivitySettings = sensitivitySettings * Mathf.Pow(sensitivitySettings, sensitivityScaling) + 0.01f;
         _sensitivitySettings = Mathf.Clamp(_sensitivitySettings, 0.01f, sensitivityScaling);
@@ -64,7 +64,9 @@ public class MouseLook : MonoBehaviour
         var mouseDelta = Mouse.current.delta.ReadValue();
 
         // Scale input against the sensitivity setting and multiply that against the smoothing value.
-        mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity.x * smoothing.x * _sensitivitySettings, sensitivity.y * smoothing.y * _sensitivitySettings));
+        mouseDelta = Vector2.Scale(mouseDelta,
+            new Vector2(sensitivity.x * smoothing.x * _sensitivitySettings,
+                sensitivity.y * smoothing.y * _sensitivitySettings));
 
         // Interpolate mouse movement over time to apply smoothing delta.
         _smoothMouse.x = Mathf.Lerp(_smoothMouse.x, mouseDelta.x, 1f / smoothing.x);
