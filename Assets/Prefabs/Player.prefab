@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1453331134020289743}
   - component: {fileID: 7879508932190577193}
   - component: {fileID: 7004767281446194944}
+  - component: {fileID: 6895761984544930836}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -82,13 +83,16 @@ MonoBehaviour:
   gravity: 20
   jumpSpeed: 8
   coyoteTime: 0.1
+  useGamepadOverKBM: 0
   sprintEnabled: 1
+  crouchEnabled: 1
+  jumpEnabled: 1
   inputDisabled: 0
-  velocity: {x: 0, y: 0, z: 0}
   playerHeightStanding: 1.7
   playerHeightCrouching: 1.1
   crouching: 0
   sprinting: 0
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &7004767281446194944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,6 +108,20 @@ MonoBehaviour:
   welder: {fileID: 7196557074041635064}
   welderAnim: {fileID: 7553328159916390961}
   remoteAnim: {fileID: 5523205679218123574}
+--- !u!114 &6895761984544930836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138722043293306475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0e239d444b447c46a637f68a9b17b23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  falloffYPos: -300
+  destroyOnFall: 0
 --- !u!1 &1584802341187472089
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +137,7 @@ GameObject:
   - component: {fileID: 1783780897838833269}
   - component: {fileID: 8722355852636807662}
   m_Layer: 3
-  m_Name: Main Camera
+  m_Name: Head
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,6 +279,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensitivitySettings: 0.5
   sensitivityScaling: 2
+  useGamepadOverKBM: 1
+  gamepadScaling: {x: 2, y: 2.5}
   mouseLookEnabled: 1
   clampInDegrees: {x: 360, y: 180}
   lockCursor: 1
