@@ -65,7 +65,7 @@ public class CharacterMovement : MonoBehaviour
 
         if (_isOnLadder)
         {
-            LadderUpdate();
+            // LadderUpdate();
             // Skip the rest of the movement
             return;
         }
@@ -292,6 +292,7 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    [Obsolete]
     private void LadderUpdate()
     {
         if (Keyboard.current.wKey.isPressed || Keyboard.current.zKey.isPressed)

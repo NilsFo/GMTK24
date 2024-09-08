@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class GameState : MonoBehaviour {
-
-
-    public enum PlayerState {
+public class GameState : MonoBehaviour
+{
+    public enum PlayerState
+    {
         Unknown,
         Menu,
         Playing,
@@ -15,19 +15,16 @@ public class GameState : MonoBehaviour {
         Win
     }
 
-    [Header("World hookup")]
-    public GameObject gameplayUI;
+    [Header("World hookup")] public GameObject gameplayUI;
     public GameObject menuUI;
     public GameObject winUI;
     public GameObject pauseUI;
     public CanvasGroup pauseGroup;
 
-    [Header("Menu hookup")]
-    public GameObject cameraHolders;
+    [Header("Menu hookup")] public GameObject cameraHolders;
     public GameObject player;
 
-    [Header("Level hookup")]
-    public GameObject levelMainMenu;
+    [Header("Level hookup")] public GameObject levelMainMenu;
     public GameObject levelTutorial;
     public GameObject level1;
     public GameObject level2;
@@ -35,11 +32,9 @@ public class GameState : MonoBehaviour {
     public GameObject level4;
 
 
-    [Header("Gameplay Parameters")]
-    public bool scaffoldingOutlineSolid;
+    [Header("Gameplay Parameters")] public bool scaffoldingOutlineSolid;
 
-    [Header("Gameplay Variables")]
-    public PlayerState currentPlayerState;
+    [Header("Gameplay Variables")] public PlayerState currentPlayerState;
     private PlayerState _lastKnownPlayerState;
     private LevelShare _levelShare;
     private MusicManager _musicManager;
@@ -51,9 +46,12 @@ public class GameState : MonoBehaviour {
     private bool _fadeOutEnabled;
     private Grid3D _grid;
 
+    [Header("Input Preferences")] public bool useGamepadOverKBM = false;
+
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         _grid = FindObjectOfType<Grid3D>();
         currentPlayerState = PlayerState.Menu;
         _lastKnownPlayerState = currentPlayerState;
@@ -75,16 +73,19 @@ public class GameState : MonoBehaviour {
         levelMainMenu.SetActive(true);
 
         _musicManager.Play(1, true);
+        UpdateMouseLock();
     }
 
-    public void StartLevel(int levelChoice) {
+    public void StartLevel(int levelChoice)
+    {
         cameraHolders.SetActive(false);
         levelMainMenu.SetActive(false);
         player.SetActive(true);
         _musicManager.Play(0, true);
         _grid.CleanUpGrid();
 
-        switch(levelChoice) {
+        switch (levelChoice)
+        {
             case 0:
                 levelTutorial.SetActive(true);
                 break;
@@ -111,81 +112,132 @@ public class GameState : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
-        if (_lastKnownPlayerState != currentPlayerState) {
+    void Update()
+    {
+        if (_lastKnownPlayerState != currentPlayerState)
+        {
             OnStateChange();
             _lastKnownPlayerState = currentPlayerState;
         }
 
-        if (currentPlayerState == PlayerState.Unknown) {
+        if (currentPlayerState == PlayerState.Unknown)
+        {
             Time.timeScale = 0f;
             Debug.LogError("YOU ARE IN ERROR STATE!");
             return;
         }
 
         Time.timeScale = 1f;
-        if (currentPlayerState == PlayerState.Paused) {
+        if (currentPlayerState == PlayerState.Paused)
+        {
             Time.timeScale = 0f;
         }
 
-        // TODD use input system
-        if (Keyboard.current.backspaceKey.wasPressedThisFrame) {
-            if (!IsWon()) {
-                if (currentPlayerState == PlayerState.Paused) {
+        Keyboard k = Keyboard.current;
+        Gamepad g = Gamepad.current;
+        bool pauseInput = false;
+        bool returnToMenuInput = false;
+
+        if (!useGamepadOverKBM && k != null)
+        {
+            pauseInput = k.backspaceKey.wasPressedThisFrame;
+            returnToMenuInput = k.enterKey.wasPressedThisFrame;
+        }
+
+        if (useGamepadOverKBM && g != null)
+        {
+            pauseInput = g.startButton.wasPressedThisFrame;
+            returnToMenuInput = g.selectButton.wasPressedThisFrame;
+        }
+
+        if (pauseInput)
+        {
+            if (!IsWon())
+            {
+                if (currentPlayerState == PlayerState.Paused)
+                {
                     currentPlayerState = PlayerState.Playing;
-                } else {
+                }
+                else
+                {
                     currentPlayerState = PlayerState.Paused;
                 }
             }
         }
 
-        if (Keyboard.current.enterKey.wasPressedThisFrame) {
-            if (currentPlayerState == PlayerState.Win || currentPlayerState == PlayerState.Paused) {
+        if (returnToMenuInput)
+        {
+            if (currentPlayerState == PlayerState.Win || currentPlayerState == PlayerState.Paused)
+            {
                 BackToMenu();
             }
         }
 
-        if (_fadeOutEnabled) {
+        if (_fadeOutEnabled)
+        {
             _winAlpha = Mathf.MoveTowards(_winAlpha, 1, fadeOutSpeed * Time.deltaTime);
             pauseGroup.alpha = _winAlpha;
         }
     }
 
-    private void OnStateChange() {
-        Debug.Log("New player state: " + currentPlayerState);
-
-        if (currentPlayerState == PlayerState.Paused || currentPlayerState == PlayerState.Menu) {
-            // Disable mouse
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        } else {
-            // Show mouse
+    public void UpdateMouseLock()
+    {
+        if (useGamepadOverKBM)
+        {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            return;
         }
 
-        if (currentPlayerState == PlayerState.Playing) {
+        if (currentPlayerState == PlayerState.Paused || currentPlayerState == PlayerState.Menu)
+        {
+            // Show mouse
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            print("GS cursor show");
+        }
+        else
+        {
+            // Disable mouse
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
+            print("GS cursor hide");
+        }
+    }
+
+    private void OnStateChange()
+    {
+        UpdateMouseLock();
+        Debug.Log("New player state: " + currentPlayerState);
+
+        if (currentPlayerState == PlayerState.Playing)
+        {
             gameplayUI.SetActive(true);
             winUI.SetActive(false);
             pauseUI.SetActive(false);
             menuUI.SetActive(false);
         }
 
-        if (currentPlayerState == PlayerState.Paused) {
+        if (currentPlayerState == PlayerState.Paused)
+        {
             gameplayUI.SetActive(false);
             winUI.SetActive(false);
             pauseUI.SetActive(true);
             menuUI.SetActive(false);
         }
 
-        if (currentPlayerState == PlayerState.Menu) {
+        if (currentPlayerState == PlayerState.Menu)
+        {
             gameplayUI.SetActive(false);
             winUI.SetActive(false);
             pauseUI.SetActive(false);
             menuUI.SetActive(true);
         }
 
-        if (currentPlayerState == PlayerState.Win) {
+        if (currentPlayerState == PlayerState.Win)
+        {
             gameplayUI.SetActive(false);
             winUI.SetActive(true);
             pauseUI.SetActive(false);
@@ -202,27 +254,37 @@ public class GameState : MonoBehaviour {
     }*/
 
     [ContextMenu("Win")]
-    public void TriggerWin() {
+    public void TriggerWin()
+    {
         currentPlayerState = PlayerState.Win;
         OnWin();
     }
 
-    public bool IsWon() {
+    public bool IsWon()
+    {
         return currentPlayerState == PlayerState.Win;
     }
 
-    private void OnWin() {
+    private void OnWin()
+    {
         Debug.Log("A winner is you.");
         Invoke(nameof(WinFadeOut), fadeOutDelay);
     }
 
-    private void WinFadeOut() {
+    private void WinFadeOut()
+    {
         _fadeOutEnabled = true;
     }
 
-    public void BackToMenu() {
+    public void BackToMenu()
+    {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Scenes/GameplayScene");
     }
 
+    public void SetUseGamepadOverKbm(bool newValue)
+    {
+        useGamepadOverKBM = newValue;
+        UpdateMouseLock();
+    }
 }
