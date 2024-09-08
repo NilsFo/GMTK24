@@ -42,6 +42,7 @@ public class WeldPoint : MonoBehaviour
                 {
                     renderer.material.color = Color.red;
                 }
+
                 break;
             case WeldState.WELDED:
                 renderer.material.color = Color.green;
@@ -58,7 +59,7 @@ public class WeldPoint : MonoBehaviour
         {
             weldState = WeldState.WELDED;
             connectedWeld.weldState = WeldState.WELDED;
-            
+
             _objectiveLogic.objectiveProgress += 1;
         }
     }

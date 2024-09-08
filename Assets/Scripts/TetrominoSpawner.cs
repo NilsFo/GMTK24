@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class TetrominoSpawner : MonoBehaviour
 {
-
-
     public TetrominoPool tetrominoPool;
 
-    [SerializeField]
-    private List<TetrominoGroupBase.TetrominoGroupType> spawnTypeQueue;
+    [SerializeField] private List<TetrominoGroupBase.TetrominoGroupType> spawnTypeQueue;
     public float queueSize = 4;
 
 
@@ -35,21 +32,25 @@ public class TetrominoSpawner : MonoBehaviour
         TetrominoGroupBase element = tetrominoPool.Next();
         var type = element.GroupType;
 
-        if (type==TetrominoGroupBase.TetrominoGroupType.Unknown){
-            Debug.LogError("Spawnqueue Conflict. Unknown tetromnios are not spawned!" + " [iterations: " + iterations + "]");
+        if (type == TetrominoGroupBase.TetrominoGroupType.Unknown)
+        {
+            Debug.LogError("Spawnqueue Conflict. Unknown tetromnios are not spawned!" + " [iterations: " + iterations +
+                           "]");
             return Next(iterations + 1);
         }
 
         if (spawnTypeQueue.Contains(type))
         {
-            Debug.LogWarning("Spawnqueue Conflict. Already contains type: " + type + " [iterations: " + iterations + "]");
+            Debug.LogWarning(
+                "Spawnqueue Conflict. Already contains type: " + type + " [iterations: " + iterations + "]");
             return Next(iterations + 1);
         }
-        
+
         if (spawnTypeQueue.Count == queueSize + 1)
         {
             spawnTypeQueue.RemoveAt(0);
         }
+
         spawnTypeQueue.Add(type);
 
         GameObject newElement = Instantiate(element.gameObject, transform.position, Quaternion.identity);
@@ -58,7 +59,4 @@ public class TetrominoSpawner : MonoBehaviour
 
         return newElement;
     }
-
-
-
 }

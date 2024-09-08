@@ -70,7 +70,10 @@ public class Crane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleInput();
+        if (_gameState.currentPlayerState == GameState.PlayerState.Playing)
+        {
+            HandleInput();
+        }
 
         if (craneState is CraneState.IDLE or CraneState.MOVING)
         {

@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class UIPromptSwitcher : MonoBehaviour
 {
-
     private GamepadInputDetector _gamepadInputDetector;
 
     public GameObject visibleKBM;
     public GameObject visibleGamePad;
-    
+
     private void Awake()
     {
         _gamepadInputDetector = FindObjectOfType<GamepadInputDetector>();
@@ -19,7 +18,6 @@ public class UIPromptSwitcher : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -29,7 +27,7 @@ public class UIPromptSwitcher : MonoBehaviour
         {
             visibleGamePad.SetActive(_gamepadInputDetector.isGamePad);
         }
-        
+
         if (visibleKBM != null)
         {
             visibleKBM.SetActive(!_gamepadInputDetector.isGamePad);

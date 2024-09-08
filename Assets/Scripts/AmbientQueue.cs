@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AmbientQueue : MonoBehaviour
 {
-
     public AudioSource source;
     [Header("Playlist")] public List<AudioClip> initiallyKnownAmbiance;
 
@@ -17,7 +16,6 @@ public class AmbientQueue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void PlayNext()
@@ -30,5 +28,4 @@ public class AmbientQueue : MonoBehaviour
         float length = clip.length;
         Invoke(nameof(PlayNext), length);
     }
-
 }

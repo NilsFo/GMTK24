@@ -2410,9 +2410,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGamePad: 0
+  registerMouseMovement: 1
+  registerKeyboardButtons: 1
+  registerMouseClicks: 1
+  registerGamepadAnalogSticks: 1
+  registerGamepadDPad: 1
+  registerGamepadButtons: 1
   onSwitchToKeyBoard:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2006091450}
+        m_TargetAssemblyTypeName: GameState, Assembly-CSharp
+        m_MethodName: SetUseGamepadOverKbm
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2006091450}
         m_TargetAssemblyTypeName: GameState, Assembly-CSharp
         m_MethodName: UpdateMouseLock
@@ -2451,18 +2469,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1004203665}
         m_TargetAssemblyTypeName: Crane, Assembly-CSharp
-        m_MethodName: SetUseGamepadOverKbm
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2006091450}
-        m_TargetAssemblyTypeName: GameState, Assembly-CSharp
         m_MethodName: SetUseGamepadOverKbm
         m_Mode: 6
         m_Arguments:
@@ -2490,6 +2496,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2006091450}
         m_TargetAssemblyTypeName: GameState, Assembly-CSharp
+        m_MethodName: SetUseGamepadOverKbm
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2006091450}
+        m_TargetAssemblyTypeName: GameState, Assembly-CSharp
         m_MethodName: UpdateMouseLock
         m_Mode: 1
         m_Arguments:
@@ -2526,18 +2544,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1004203665}
         m_TargetAssemblyTypeName: Crane, Assembly-CSharp
-        m_MethodName: SetUseGamepadOverKbm
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2006091450}
-        m_TargetAssemblyTypeName: GameState, Assembly-CSharp
         m_MethodName: SetUseGamepadOverKbm
         m_Mode: 6
         m_Arguments:
@@ -2682,26 +2688,36 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 239737152985571918, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+    - target: {fileID: 519895625821113781, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 651780039407869680, guid: 92942b6dc1f0ee642a6523853f0d6d81,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2006091450}
-    - target: {fileID: 384697626409674675, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+    - target: {fileID: 2883769219745513523, guid: 92942b6dc1f0ee642a6523853f0d6d81,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2006091450}
+    - target: {fileID: 3523375760965247754, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3647513116006418866, guid: 92942b6dc1f0ee642a6523853f0d6d81,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2006091450}
-    - target: {fileID: 3992135648175655454, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+    - target: {fileID: 3671159315286301163, guid: 92942b6dc1f0ee642a6523853f0d6d81,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2006091450}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4485055108254755553, guid: 92942b6dc1f0ee642a6523853f0d6d81,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2802,16 +2818,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4797713610899081292, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2006091450}
+    - target: {fileID: 5024131349370458426, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165158954563464155, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5251490255253787191, guid: 92942b6dc1f0ee642a6523853f0d6d81,
         type: 3}
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 6998398295770683262, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+    - target: {fileID: 6424208616448603435, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6424208616448603435, guid: 92942b6dc1f0ee642a6523853f0d6d81,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2006091450}
+    - target: {fileID: 6424208616448603435, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244909013917482885, guid: 92942b6dc1f0ee642a6523853f0d6d81,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8578877361133715173, guid: 92942b6dc1f0ee642a6523853f0d6d81,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -3089,6 +3135,11 @@ PrefabInstance:
       propertyPath: levelTutorial
       value: 
       objectReference: {fileID: 747419435}
+    - target: {fileID: 5706283700379175552, guid: 0878952b3036f72409541d1a065c6ba8,
+        type: 3}
+      propertyPath: characterMovement
+      value: 
+      objectReference: {fileID: 1237506201}
     - target: {fileID: 6002320601250211554, guid: 0878952b3036f72409541d1a065c6ba8,
         type: 3}
       propertyPath: text

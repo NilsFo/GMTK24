@@ -7,13 +7,22 @@ using UnityEngine.InputSystem.Controls;
 
 public class GamepadInputDetector : MonoBehaviour
 {
-    [Header("Is GamePad Mode?")] public bool isGamePad;
+    [Header("[ReadOnly]Is GamePad Mode?")] public bool isGamePad;
     private bool _isGamePad;
 
     private Vector2 _dpadThisFrame = new Vector2();
     private Vector2 _dpadLastFrame = new Vector2();
 
-    [Header("Listener")] public UnityEvent onSwitchToKeyBoard, onSwitchToGamePad;
+    [Header("Parameters: KBM")] public bool registerMouseMovement = true;
+    public bool registerKeyboardButtons = true;
+    public bool registerMouseClicks = true;
+
+    [Header("Parameters: Gamepad")] public bool registerGamepadAnalogSticks = true;
+    public bool registerGamepadDPad = true;
+    public bool registerGamepadButtons = true;
+
+    [Header("Listeners")] public UnityEvent onSwitchToKeyBoard;
+    public UnityEvent onSwitchToGamePad;
 
     void Start()
     {
@@ -40,6 +49,7 @@ public class GamepadInputDetector : MonoBehaviour
         // ##################################
         //  Checking if device is plugged in
         // ##################################
+
         if (gamepad == null)
         {
             isGamePad = false;
@@ -55,12 +65,15 @@ public class GamepadInputDetector : MonoBehaviour
         // ##################################
         if (mouse != null && keyboard != null)
         {
-            bool isMouseClicked = mouse.leftButton.isPressed ||
-                                  mouse.rightButton.isPressed ||
-                                  mouse.middleButton.isPressed ||
-                                  mouse.delta.ReadValue() != Vector2.zero ||
-                                  mouse.scroll.ReadValue() != Vector2.zero;
-            bool isKeyboardPressed = keyboard.anyKey.isPressed;
+            bool isMouseClicked = registerMouseClicks && (
+                                      mouse.leftButton.isPressed ||
+                                      mouse.rightButton.isPressed ||
+                                      mouse.middleButton.isPressed) ||
+                                  registerMouseMovement && (
+                                      mouse.delta.ReadValue() != Vector2.zero ||
+                                      mouse.scroll.ReadValue() != Vector2.zero
+                                  );
+            bool isKeyboardPressed = registerKeyboardButtons && keyboard.anyKey.isPressed;
 
             if (isMouseClicked || isKeyboardPressed)
             {
@@ -71,9 +84,17 @@ public class GamepadInputDetector : MonoBehaviour
         if (gamepad != null)
         {
             bool isGamepadInput =
-                gamepad.allControls.Any(control => control is ButtonControl && ((ButtonControl)control).isPressed) ||
-                (gamepad.leftStick.ReadValue() != Vector2.zero || gamepad.rightStick.ReadValue() != Vector2.zero ||
-                 gamepad.leftTrigger.isPressed || gamepad.rightTrigger.isPressed);
+                registerGamepadButtons && (
+                    gamepad.allControls.Any(control =>
+                        control is ButtonControl && ((ButtonControl)control).isPressed)
+                    ||
+                    gamepad.leftTrigger.isPressed || gamepad.rightTrigger.isPressed
+                )
+                ||
+                registerGamepadAnalogSticks && (
+                    gamepad.leftStick.ReadValue() != Vector2.zero ||
+                    gamepad.rightStick.ReadValue() != Vector2.zero
+                );
             // Check for any button press
 
             if (isGamepadInput)
@@ -86,7 +107,7 @@ public class GamepadInputDetector : MonoBehaviour
         //  Updating D-Pad
         // ##################################
         _dpadLastFrame = _dpadThisFrame;
-        if (isGamePad)
+        if (isGamePad && registerGamepadDPad)
         {
             _dpadThisFrame = Gamepad.current.dpad.ReadValue();
         }

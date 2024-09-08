@@ -20,6 +20,7 @@ public class GameState : MonoBehaviour
     public GameObject winUI;
     public GameObject pauseUI;
     public CanvasGroup pauseGroup;
+    public CharacterMovement characterMovement;
 
     [Header("Menu hookup")] public GameObject cameraHolders;
     public GameObject player;
@@ -71,7 +72,8 @@ public class GameState : MonoBehaviour
         cameraHolders.SetActive(true);
         player.SetActive(false);
         levelMainMenu.SetActive(true);
-
+        
+        characterMovement.inputDisabled = true;
         _musicManager.Play(1, true);
         UpdateMouseLock();
     }
@@ -152,7 +154,7 @@ public class GameState : MonoBehaviour
 
         if (pauseInput)
         {
-            if (!IsWon())
+            if (!IsWon() && currentPlayerState != PlayerState.Menu)
             {
                 if (currentPlayerState == PlayerState.Paused)
                 {
@@ -194,16 +196,12 @@ public class GameState : MonoBehaviour
             // Show mouse
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-
-            print("GS cursor show");
         }
         else
         {
             // Disable mouse
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-
-            print("GS cursor hide");
         }
     }
 
@@ -218,6 +216,8 @@ public class GameState : MonoBehaviour
             winUI.SetActive(false);
             pauseUI.SetActive(false);
             menuUI.SetActive(false);
+
+            characterMovement.inputDisabled = false;
         }
 
         if (currentPlayerState == PlayerState.Paused)
@@ -226,6 +226,8 @@ public class GameState : MonoBehaviour
             winUI.SetActive(false);
             pauseUI.SetActive(true);
             menuUI.SetActive(false);
+            
+            characterMovement.inputDisabled = true;
         }
 
         if (currentPlayerState == PlayerState.Menu)
@@ -234,6 +236,8 @@ public class GameState : MonoBehaviour
             winUI.SetActive(false);
             pauseUI.SetActive(false);
             menuUI.SetActive(true);
+            
+            characterMovement.inputDisabled = true;
         }
 
         if (currentPlayerState == PlayerState.Win)
@@ -242,6 +246,8 @@ public class GameState : MonoBehaviour
             winUI.SetActive(true);
             pauseUI.SetActive(false);
             menuUI.SetActive(false);
+            
+            characterMovement.inputDisabled = false;
         }
     }
 
@@ -287,4 +293,11 @@ public class GameState : MonoBehaviour
         useGamepadOverKBM = newValue;
         UpdateMouseLock();
     }
+
+    public void QuitGame()
+    {
+        Debug.LogWarning("Game Quit");
+        Application.Quit();
+    }
+    
 }

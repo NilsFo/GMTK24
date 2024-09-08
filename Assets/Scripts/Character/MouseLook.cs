@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 [AddComponentMenu("Camera/Simple Smooth Mouse Look ")]
 public class MouseLook : MonoBehaviour
@@ -8,7 +9,7 @@ public class MouseLook : MonoBehaviour
     private Vector2 _smoothMouse;
 
     [Header("Player Settings")] [Range(0, 1)]
-    public float sensitivitySettings = 0.5f;
+    public float userDesiredSensitivitySetting = 0.5f;
 
     public float sensitivityScaling = 3f;
     private float _sensitivitySettings;
@@ -55,7 +56,8 @@ public class MouseLook : MonoBehaviour
         }
 
         // Updating sensitivity
-        _sensitivitySettings = sensitivitySettings * Mathf.Pow(sensitivitySettings, sensitivityScaling) + 0.01f;
+        _sensitivitySettings =
+            userDesiredSensitivitySetting * Mathf.Pow(userDesiredSensitivitySetting, sensitivityScaling) + 0.01f;
         _sensitivitySettings = Mathf.Clamp(_sensitivitySettings, 0.01f, sensitivityScaling);
 
         // Allow the script to clamp based on a desired target value.
@@ -119,7 +121,7 @@ public class MouseLook : MonoBehaviour
 
     private void LateUpdate()
     {
-        sensitivitySettings = Mathf.Clamp(sensitivitySettings, 0f, 1f);
+        userDesiredSensitivitySetting = Mathf.Clamp(userDesiredSensitivitySetting, 0f, 1f);
     }
 
     public void SetUseGamepadOverKbm(bool newValue)

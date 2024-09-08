@@ -5,15 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(TetrominoGroupBase))]
 public class TetrominoColor : MonoBehaviour
 {
-
-
-    [SerializeField]
-    private List<MeshRenderer> meshRenderers;
+    [SerializeField] private List<MeshRenderer> meshRenderers;
     private TetrominoGroupBase _tetromino;
 
 
-    [Header("Scafolding Colors")]
-    public List<Material> tetrominoScafoldingMaterials;
+    [Header("Scafolding Colors")] public List<Material> tetrominoScafoldingMaterials;
 
     void Awake()
     {
@@ -42,7 +38,6 @@ public class TetrominoColor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void NextPaint()
@@ -58,5 +53,4 @@ public class TetrominoColor : MonoBehaviour
     {
         return tetrominoScafoldingMaterials[UnityEngine.Random.Range(0, tetrominoScafoldingMaterials.Count - 1)];
     }
-
 }
