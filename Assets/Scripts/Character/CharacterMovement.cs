@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -18,12 +19,12 @@ public class CharacterMovement : MonoBehaviour
     public float coyoteTime = 0.1f;
     private float _jumpCoyoteTimer;
 
-    [Header("Movement Config")] public bool sprintEnabled;
-    public bool inputDisabled = false;
+    [Header("Gamepad Config")] public bool useGamepadOverKBM = false;
 
-    public Vector3 velocity;
-    private Vector3 _acc;
-    private Vector3 _startingPos;
+    [Header("Movement Config")] public bool sprintEnabled = true;
+    public bool crouchEnabled = true;
+    public bool jumpEnabled = true;
+    public bool inputDisabled = false;
 
     [Header("Player Collision")] public float playerHeightStanding = 1.8f;
     public float playerHeightCrouching = 1.1f;
@@ -34,8 +35,11 @@ public class CharacterMovement : MonoBehaviour
     [Header("Game Hookup")] private CharacterController _controller;
     private Camera _camera;
 
+    [Header("Readonly")] public Vector3 velocity;
+    private Vector3 _acc;
     private bool _isOnLadder;
     private Vector3 _ladderNormal;
+    private int _myLayerMask;
 
 
     // Start is called before the first frame update
@@ -44,25 +48,24 @@ public class CharacterMovement : MonoBehaviour
         velocity = new Vector3();
         _controller = GetComponent<CharacterController>();
         _camera = GetComponentInChildren<Camera>();
-        _startingPos = transform.position;
-        myLayerMask = GetPhysicsLayerMask(gameObject.layer);
+        _myLayerMask = GetPhysicsLayerMask(gameObject.layer);
 
         _eyesToHeadDist = (playerHeightStanding - _camera.transform.localPosition.y * 2);
     }
 
-    private void Update() {
+    private void Update()
+    {
         Vector3 groundNormal = GetNormalBelow();
-        
+
         bool isGrounded = _controller.isGrounded && Vector3.Angle(groundNormal, Vector3.up) < _controller.slopeLimit;
         // Coyote Time
         if (isGrounded)
             _jumpCoyoteTimer = 0;
         _jumpCoyoteTimer += Time.deltaTime;
 
-        float x = 0, z = 0;
-
-        if (_isOnLadder) {
-            LadderUpdate();
+        if (_isOnLadder)
+        {
+            // LadderUpdate();
             // Skip the rest of the movement
             return;
         }
@@ -75,10 +78,12 @@ public class CharacterMovement : MonoBehaviour
             }
         }
 
-        var keyboard = Keyboard.current;
+        float x = 0, z = 0;
+        Keyboard keyboard = Keyboard.current;
+        Gamepad gamepad = Gamepad.current;
         if (keyboard != null)
         {
-            if (keyboard.aKey.isPressed || keyboard.qKey.isPressed)
+            if (keyboard.aKey.isPressed)
             {
                 x -= 1;
             }
@@ -88,7 +93,7 @@ public class CharacterMovement : MonoBehaviour
                 x += 1;
             }
 
-            if (keyboard.wKey.isPressed || keyboard.zKey.isPressed)
+            if (keyboard.wKey.isPressed)
             {
                 z += 1;
             }
@@ -99,6 +104,18 @@ public class CharacterMovement : MonoBehaviour
             }
         }
 
+        if (gamepad != null && useGamepadOverKBM)
+        {
+            StickControl stick = gamepad.leftStick;
+            if (stick != null)
+            {
+                var stickX = stick.x.ReadValue();
+                var stickY = stick.y.ReadValue();
+                x = stickX;
+                z = stickY;
+            }
+        }
+
         // Movement
         _acc.x = 0;
         _acc.y = 0;
@@ -106,10 +123,29 @@ public class CharacterMovement : MonoBehaviour
         bool hasJumped = false;
         sprinting = false;
         bool sprint = false;
-        if (!inputDisabled && keyboard != null)
+
+        if (!inputDisabled && (keyboard != null || (gamepad != null && useGamepadOverKBM)))
         {
+            // ############################
+            //   MOVEMENT
+            // ############################
+
+            bool sprintPressed = false;
             if (sprintEnabled)
-                sprint = keyboard.shiftKey.isPressed;
+            {
+                if (useGamepadOverKBM)
+                {
+                    sprintPressed = gamepad.buttonEast.isPressed;
+                }
+                else
+                {
+                    sprintPressed = keyboard.shiftKey.isPressed;
+                }
+
+                sprint = sprintPressed;
+            }
+
+
             if (isGrounded)
             {
                 velocity.y = -gravity * 0.2f;
@@ -141,7 +177,23 @@ public class CharacterMovement : MonoBehaviour
                 _acc *= acceleration * 0.05f;
             }
 
-            if (keyboard.spaceKey.wasPressedThisFrame && !crouching)
+            // ############################
+            //   JUMPING
+            // ############################
+            bool jumpPressed = false;
+            if (jumpEnabled)
+            {
+                if (useGamepadOverKBM)
+                {
+                    jumpPressed = gamepad.buttonSouth.isPressed;
+                }
+                else
+                {
+                    jumpPressed = keyboard.spaceKey.wasPressedThisFrame;
+                }
+            }
+
+            if (jumpPressed && !crouching)
             {
                 if (isGrounded || _jumpCoyoteTimer <= coyoteTime)
                 {
@@ -167,18 +219,35 @@ public class CharacterMovement : MonoBehaviour
                 }
             }
 
+            // ############################
+            //   CROUCHING
+            // ############################
+            bool crouchPressed = false;
+            if (crouchEnabled)
+            {
+                if (useGamepadOverKBM)
+                {
+                    crouchPressed = gamepad.buttonNorth.isPressed;
+                }
+                else
+                {
+                    crouchPressed = keyboard.leftCtrlKey.wasPressedThisFrame;
+                }
+            }
+
             // Crouching
-            if (keyboard.cKey.wasPressedThisFrame && !crouching)
+            if (crouchPressed && !crouching)
             {
                 crouching = true;
                 _controller.height = playerHeightCrouching;
                 _controller.center.Set(0, playerHeightCrouching / 2f, 0);
                 _camera.transform.localPosition = new Vector3(0, (playerHeightCrouching - _eyesToHeadDist) / 2, 0);
             }
-            else if ((keyboard.cKey.wasPressedThisFrame || keyboard.spaceKey.wasPressedThisFrame ||
-                      keyboard.shiftKey.wasPressedThisFrame) && crouching)
+            else if (((crouchPressed && crouchEnabled) ||
+                      (jumpPressed && jumpEnabled) ||
+                      (sprintPressed && sprintEnabled)) && crouching)
             {
-                var couldStandUp = StandUp();
+                bool couldStandUp = StandUp();
             }
         }
 
@@ -223,49 +292,57 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    private void LadderUpdate() {
-        if (Keyboard.current.wKey.isPressed || Keyboard.current.zKey.isPressed) {
+    [Obsolete]
+    private void LadderUpdate()
+    {
+        if (Keyboard.current.wKey.isPressed || Keyboard.current.zKey.isPressed)
+        {
             _controller.Move(Vector3.up * (maximumSpeed * Time.deltaTime));
         }
-        if (Keyboard.current.sKey.isPressed) {
+
+        if (Keyboard.current.sKey.isPressed)
+        {
             var m = Vector3.down * (maximumSpeed * Time.deltaTime);
             _controller.Move(m);
             velocity = Vector3.down * maximumSpeed;
         }
-        if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
             velocity = _ladderNormal;
             _isOnLadder = false;
         }
-        if (_controller.isGrounded && velocity.y < -1) {
+
+        if (_controller.isGrounded && velocity.y < -1)
+        {
             _isOnLadder = false;
         }
     }
 
-    private Vector3 GetNormalBelow() {
+    private Vector3 GetNormalBelow()
+    {
         RaycastHit hit;
-        var layerMask = myLayerMask;
+        int layerMask = _myLayerMask;
         Vector3 result = Vector3.zero;
+
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 3f, layerMask)) {
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 3f, layerMask))
+        {
             result = hit.normal;
         }
+
         return result;
     }
-    private int myLayerMask;
-    public static LayerMask GetPhysicsLayerMask(int currentLayer) {
+
+    public static LayerMask GetPhysicsLayerMask(int currentLayer)
+    {
         int finalMask = 0;
-        for (int i=0; i<32; i++) {
+        for (int i = 0; i < 32; i++)
+        {
             if (!Physics.GetIgnoreLayerCollision(currentLayer, i)) finalMask = finalMask | (1 << i);
         }
+
         return finalMask;
-    }
-    
-    private void LateUpdate()
-    {
-        if (transform.position.y <= -100)
-        {
-            transform.position = _startingPos;
-        }
     }
 
     private bool StandUp()
@@ -287,7 +364,7 @@ public class CharacterMovement : MonoBehaviour
 
         return !hit;
     }
-    
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if ((_controller.collisionFlags & (CollisionFlags.Below | CollisionFlags.Above)) == 0)
@@ -295,12 +372,12 @@ public class CharacterMovement : MonoBehaviour
             var normal = hit.normal;
             velocity = Vector3.ProjectOnPlane(velocity, normal);
         }
-        
-
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ladder")) {
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ladder"))
+        {
             _isOnLadder = true;
             velocity = Vector3.zero;
             _ladderNormal = other.transform.forward;
@@ -308,8 +385,10 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ladder")) {
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ladder"))
+        {
             _isOnLadder = false;
             Debug.Log("Ladder dismount");
         }
@@ -335,5 +414,10 @@ public class CharacterMovement : MonoBehaviour
 
         velocity.x = vXY.x;
         velocity.z = vXY.z;
+    }
+
+    public void SetUseGamepadOverKbm(bool newValue)
+    {
+        useGamepadOverKBM = newValue;
     }
 }

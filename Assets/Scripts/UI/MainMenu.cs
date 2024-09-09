@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-
     private LevelShare levelShare;
+    private GamepadInputDetector _gamepadInputDetector;
     public Slider slider;
     public MusicManager musicManager;
     private GameState _gameState;
@@ -15,22 +15,30 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _gamepadInputDetector = FindObjectOfType<GamepadInputDetector>();
+
         Time.timeScale = 1f;
         levelShare = FindObjectOfType<LevelShare>();
         musicManager.Play(1, true);
 
         slider.value = MusicManager.userDesiredMasterVolume;
 
-        // TODO show cursor here, in case gameplay scene has hidden it
-        Cursor.visible = true;
+        if (!_gamepadInputDetector.isGamePad)
+        {
+            // show cursor here, in case gameplay scene has hidden it
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Cursor.visible = true;
-        // Cursor.lockState = CursorLockMode.None;
-        MusicManager.userDesiredMasterVolume = slider.value;
     }
 
     // public void Level1()
@@ -51,5 +59,4 @@ public class MainMenu : MonoBehaviour
     //     LevelShare.levelChoice = 0;
     //     SceneManager.LoadScene("Scenes/GameplayScene");
     // }
-
 }

@@ -7,14 +7,13 @@ using UnityEngine;
 [RequireComponent(typeof(MeshCollider))]
 public class Tetromino : MonoBehaviour
 {
-
     public enum TetrominoType
     {
-        House, Scaffold
+        House,
+        Scaffold
     }
 
-    [SerializeField]
-    private TetrominoType tetrominoType;
+    [SerializeField] private TetrominoType tetrominoType;
     public TetrominoType Type => tetrominoType;
 
     public MeshRenderer outlineMesh;
@@ -31,7 +30,6 @@ public class Tetromino : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -39,5 +37,4 @@ public class Tetromino : MonoBehaviour
     {
         //outlineMeshCollider.enabled = _gameState.scaffoldingOutlineSolid;
     }
-
 }

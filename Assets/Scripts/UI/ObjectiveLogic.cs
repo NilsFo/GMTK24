@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ObjectiveLogic : MonoBehaviour
 {
-
     public Slider slider;
     public TMP_Text text;
 
@@ -45,7 +44,6 @@ public class ObjectiveLogic : MonoBehaviour
         float progressPercentage = (float)objectiveProgress / (float)objectiveTarget;
         _fill = Mathf.MoveTowards(_fill, progressPercentage, fillSpeed * Time.deltaTime);
         slider.value = _fill;
-
     }
 
     void LateUpdate()
@@ -61,5 +59,4 @@ public class ObjectiveLogic : MonoBehaviour
             // _gameState.musicManager.CreateAudioClip(winClip, _gameState.transform.position, respectBinning: false);
         }
     }
-
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 
+[Obsolete]
 public class CameraShaker : MonoBehaviour
 {
-
     public new Camera camera;
 
 
@@ -23,7 +24,8 @@ public class CameraShaker : MonoBehaviour
         camera.transform.DOShakePosition(duration, amplitude, frequency);
     }
 
-    public void ResetShake() {
+    public void ResetShake()
+    {
         DOTween.Kill(camera.transform);
     }
 }

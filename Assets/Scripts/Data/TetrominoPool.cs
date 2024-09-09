@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+[Obsolete]
 [CreateAssetMenu(fileName = "New Tetromino Pool", menuName = "GMTK24/ScriptableObjects/New Tetromino Pool", order = 1)]
 public class TetrominoPool : ScriptableObject
 {
-
     public List<TetrominoPoolEntry> tetrominos;
 
     public TetrominoGroupBase Next()
@@ -24,13 +24,7 @@ public class TetrominoPool : ScriptableObject
     [Serializable]
     public class TetrominoPoolEntry
     {
-
         [SerializeField] public TetrominoGroupBase tetromino;
         [SerializeField] public int weight = 1;
-
-
     }
-
 }
-
-

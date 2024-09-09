@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 
 public class Grid3D : MonoBehaviour
 {
-
     private TetrominoGroupBase[,,] _grid;
 
     [SerializeField] private int sizeX = 10;
@@ -17,7 +16,7 @@ public class Grid3D : MonoBehaviour
 
     [SerializeField] private int bufferX = 3;
     [SerializeField] private int bufferZ = 3;
-    
+
     [SerializeField] private float blockScaleX = 3f;
     [SerializeField] private float blockScaleY = 3f;
     [SerializeField] private float blockScaleZ = 3f;
@@ -33,17 +32,19 @@ public class Grid3D : MonoBehaviour
         bool isNotInside = false;
         int posInInt = Mathf.RoundToInt(pos);
         int index = (int)(posInInt / blockScaleX);
-        
+
         if (index < min)
         {
             index = min;
             isNotInside = true;
         }
+
         if (index > max)
         {
             index = max;
             isNotInside = true;
         }
+
         return (index, isNotInside);
     }
 
@@ -78,12 +79,12 @@ public class Grid3D : MonoBehaviour
 
         return !indexX.Item2 && !indexY.Item2 && !indexZ.Item2;
     }
-    
+
     public bool IsInsideDropZone(Vector3 pos)
     {
-        var indexX = ToIndex(pos.x, 0+bufferX, sizeX-bufferX);
+        var indexX = ToIndex(pos.x, 0 + bufferX, sizeX - bufferX);
         var indexY = ToIndex(pos.y, 0, sizeY);
-        var indexZ = ToIndex(pos.z, 0+bufferZ, sizeZ-bufferZ);
+        var indexZ = ToIndex(pos.z, 0 + bufferZ, sizeZ - bufferZ);
 
         return !indexX.Item2 && !indexY.Item2 && !indexZ.Item2;
     }
@@ -95,6 +96,7 @@ public class Grid3D : MonoBehaviour
         {
             result[i] = WorldToLocal(pos[i]);
         }
+
         return result;
     }
 
@@ -105,6 +107,7 @@ public class Grid3D : MonoBehaviour
         {
             result[i] = LocalToWorld(pos[i]);
         }
+
         return result;
     }
 
@@ -120,6 +123,7 @@ public class Grid3D : MonoBehaviour
                 break;
             }
         }
+
         return result;
     }
 
@@ -131,13 +135,15 @@ public class Grid3D : MonoBehaviour
         {
             _grid[indexes[i].x, indexes[i].y, indexes[i].z] = shape;
         }
+
         return true;
     }
 
-    public Vector3Int GetSize() {
+    public Vector3Int GetSize()
+    {
         return new Vector3Int(sizeX, sizeY, sizeZ);
     }
-    
+
     public void RemoveShape(Vector3Int[] indexes)
     {
         for (int i = 0; i < indexes.Length; i++)
@@ -145,7 +151,7 @@ public class Grid3D : MonoBehaviour
             _grid[indexes[i].x, indexes[i].y, indexes[i].z] = null;
         }
     }
-    
+
     public Vector3 GetScale()
     {
         return new Vector3(blockScaleX, blockScaleY, blockScaleZ);
@@ -156,7 +162,8 @@ public class Grid3D : MonoBehaviour
         return _grid[index.x, index.y, index.z];
     }
 
-    public bool IsEmpty(Vector3Int index) {
+    public bool IsEmpty(Vector3Int index)
+    {
         if (index.y < 0)
             return false;
         return _grid[index.x, index.y, index.z] == null;
@@ -164,20 +171,21 @@ public class Grid3D : MonoBehaviour
 
     public Vector3 GetHighestEmptyCell(Vector2Int index)
     {
-        for (int i = sizeY-1; i >= 0; i--)
+        for (int i = sizeY - 1; i >= 0; i--)
         {
             TetrominoGroupBase cell = _grid[index.x, i, index.y];
             if (cell != null)
             {
-                return LocalToWorld(new Vector3Int(index.x, i+1, index.y));
+                return LocalToWorld(new Vector3Int(index.x, i + 1, index.y));
             }
         }
-        return LocalToWorld(new Vector3Int(index.x,0,index.y));
+
+        return LocalToWorld(new Vector3Int(index.x, 0, index.y));
     }
-    
+
     public TetrominoGroupBase GetHighestCell(Vector2Int index)
     {
-        for (int i = sizeY-1; i >= 0; i--)
+        for (int i = sizeY - 1; i >= 0; i--)
         {
             TetrominoGroupBase cell = _grid[index.x, i, index.y];
             if (cell != null)
@@ -185,26 +193,28 @@ public class Grid3D : MonoBehaviour
                 return cell;
             }
         }
+
         return null;
     }
 
-    public void CleanUpGrid() {
+    public void CleanUpGrid()
+    {
         _grid = new TetrominoGroupBase[sizeX, sizeY, sizeZ];
     }
-    
+
     [Obsolete]
     public Bounds ToBounds()
     {
         Vector3 center = new Vector3(
-                                     transform.position.x + sizeX / 2,
-                                     transform.position.y + sizeY / 2,
-                                     transform.position.z + sizeZ / 2
-                                     );
+            transform.position.x + sizeX / 2,
+            transform.position.y + sizeY / 2,
+            transform.position.z + sizeZ / 2
+        );
         Vector3 size = new Vector3(
-                                     sizeX * blockScaleX,
-                                     sizeY * blockScaleY,
-                                     sizeZ * blockScaleZ
-                                     );
+            sizeX * blockScaleX,
+            sizeY * blockScaleY,
+            sizeZ * blockScaleZ
+        );
 
         return new Bounds(center, size);
     }
@@ -219,16 +229,13 @@ public class Grid3D : MonoBehaviour
 
     public void OnDrawGizmosSelected()
     {
-
         Gizmos.color = Color.red;
         //Gizmos.DrawCube(GetWorldCenter(), Vector3.one);
 
         for (int x = 0; x < sizeX; x++)
         {
-
             for (int y = 0; y < sizeY; y++)
             {
-
                 for (int z = 0; z < sizeZ; z++)
                 {
                     Vector3Int pos = new Vector3Int(x, y, z);
@@ -259,7 +266,7 @@ public class Grid3D : MonoBehaviour
             }
         }
     }
-    
+
     private void DrawBounds(Bounds bounds, Color color)
     {
         Vector3[] corners = new Vector3[8];
@@ -296,7 +303,6 @@ public class Grid3D : MonoBehaviour
         Gizmos.DrawLine(corners[2], corners[6]);
         Gizmos.DrawLine(corners[3], corners[7]);
     }
-    
+
 #endif
-    
 }

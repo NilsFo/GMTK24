@@ -12,6 +12,7 @@ public class Welder : MonoBehaviour
         INACTIVE
     }
 
+    public bool useGamepadOverKBM = false;
     public WelderState welderState = WelderState.ACTIVE;
 
     public float weldDistance = 1.5f;
@@ -28,9 +29,23 @@ public class Welder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Mouse m = Mouse.current;
+        Gamepad g = Gamepad.current;
+        bool weldInput = false;
+
+        if (!useGamepadOverKBM && m != null)
+        {
+            weldInput = m.leftButton.wasPressedThisFrame;
+        }
+
+        if (useGamepadOverKBM && g != null)
+        {
+            weldInput = g.buttonWest.wasPressedThisFrame;
+        }
+
         if (welderState == WelderState.ACTIVE && _gameState.currentPlayerState == GameState.PlayerState.Playing)
         {
-            if (Mouse.current.leftButton.wasPressedThisFrame)
+            if (weldInput)
             {
                 Weld();
             }
@@ -43,9 +58,11 @@ public class Welder : MonoBehaviour
 
         int layerMask = LayerMask.GetMask("Default", "Entities");
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, weldDistance, layerMask))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, weldDistance,
+                layerMask))
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance,
+                Color.yellow);
             var weldPoint = hit.collider.gameObject.GetComponent<WeldPoint>();
             if (weldPoint != null)
             {
@@ -61,9 +78,11 @@ public class Welder : MonoBehaviour
         int layerMask = LayerMask.GetMask("Default", "Entities");
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, weldDistance, layerMask))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, weldDistance,
+                layerMask))
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance,
+                Color.yellow);
             var weldPoint = hit.collider.gameObject.GetComponent<WeldPoint>();
             if (weldPoint != null)
             {
@@ -75,7 +94,7 @@ public class Welder : MonoBehaviour
                 }
                 else if (weldPoint.weldState == WeldPoint.WeldState.WELDED)
                 {
-                    weldPoint.Unweld();
+                    weldPoint.UnWeld();
                     weldSFX.Play();
                 }
             }
@@ -88,5 +107,10 @@ public class Welder : MonoBehaviour
         {
             Debug.Log("Nothing to Weld");
         }
+    }
+
+    public void SetUseGamepadOverKbm(bool newValue)
+    {
+        useGamepadOverKBM = newValue;
     }
 }

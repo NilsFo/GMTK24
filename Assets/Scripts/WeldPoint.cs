@@ -7,14 +7,16 @@ public class WeldPoint : MonoBehaviour
 {
     public enum WeldState
     {
-        UNWELDED, CAN_WELD, WELDED
+        UNWELDED,
+        CAN_WELD,
+        WELDED
     }
 
     public WeldState weldState = WeldState.UNWELDED;
     public WeldPoint connectedWeld = null;
 
     public new MeshRenderer renderer;
-    
+
     private ObjectiveLogic _objectiveLogic;
 
 
@@ -27,13 +29,27 @@ public class WeldPoint : MonoBehaviour
         renderer.material.color = Color.red;
     }
 
-    private void Update() {
-        if (weldState == WeldState.CAN_WELD) {
-            if ((int)Time.time % 2 == 0) {
-                renderer.material.color = Color.yellow;
-            } else {
+    private void Update()
+    {
+        switch (weldState)
+        {
+            case WeldState.CAN_WELD:
+                if ((int)Time.time % 2 == 0)
+                {
+                    renderer.material.color = Color.yellow;
+                }
+                else
+                {
+                    renderer.material.color = Color.red;
+                }
+
+                break;
+            case WeldState.WELDED:
+                renderer.material.color = Color.green;
+                break;
+            case WeldState.UNWELDED:
                 renderer.material.color = Color.red;
-            }
+                break;
         }
     }
 
@@ -42,26 +58,18 @@ public class WeldPoint : MonoBehaviour
         if (connectedWeld != null && weldState == WeldState.CAN_WELD && connectedWeld.weldState == WeldState.CAN_WELD)
         {
             weldState = WeldState.WELDED;
-            renderer.material.color = Color.green;
-
             connectedWeld.weldState = WeldState.WELDED;
-            connectedWeld.renderer.material.color = Color.green;
-
 
             _objectiveLogic.objectiveProgress += 1;
         }
     }
 
-    public void Unweld()
+    public void UnWeld()
     {
-        if  (connectedWeld != null && weldState == WeldState.WELDED && connectedWeld.weldState == WeldState.WELDED)
+        if (connectedWeld != null && weldState == WeldState.WELDED && connectedWeld.weldState == WeldState.WELDED)
         {
             weldState = WeldState.CAN_WELD;
-            
-            renderer.material.color = Color.red;
-
             connectedWeld.weldState = WeldState.CAN_WELD;
-            connectedWeld.renderer.material.color = Color.red;
 
             _objectiveLogic.objectiveProgress -= 1;
         }
