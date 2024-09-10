@@ -227,7 +227,7 @@ public class CharacterMovement : MonoBehaviour
             {
                 if (useGamepadOverKBM)
                 {
-                    crouchPressed = gamepad.buttonNorth.isPressed;
+                    crouchPressed = gamepad.buttonNorth.wasPressedThisFrame;
                 }
                 else
                 {

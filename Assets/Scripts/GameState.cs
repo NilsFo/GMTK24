@@ -32,14 +32,13 @@ public class GameState : MonoBehaviour
     public GameObject level3;
     public GameObject level4;
 
-
     [Header("Gameplay Parameters")] public bool scaffoldingOutlineSolid;
 
     [Header("Gameplay Variables")] public PlayerState currentPlayerState;
     private PlayerState _lastKnownPlayerState;
     private LevelShare _levelShare;
     private MusicManager _musicManager;
-    public MusicManager musicManager => _musicManager;
+    public MusicManager MusicManager => _musicManager;
 
     private float _winAlpha = 0f;
     public float fadeOutDelay = 3f;
@@ -72,7 +71,7 @@ public class GameState : MonoBehaviour
         cameraHolders.SetActive(true);
         player.SetActive(false);
         levelMainMenu.SetActive(true);
-        
+
         characterMovement.inputDisabled = true;
         _musicManager.Play(1, true);
         UpdateMouseLock();
@@ -226,7 +225,7 @@ public class GameState : MonoBehaviour
             winUI.SetActive(false);
             pauseUI.SetActive(true);
             menuUI.SetActive(false);
-            
+
             characterMovement.inputDisabled = true;
         }
 
@@ -236,7 +235,7 @@ public class GameState : MonoBehaviour
             winUI.SetActive(false);
             pauseUI.SetActive(false);
             menuUI.SetActive(true);
-            
+
             characterMovement.inputDisabled = true;
         }
 
@@ -246,7 +245,7 @@ public class GameState : MonoBehaviour
             winUI.SetActive(true);
             pauseUI.SetActive(false);
             menuUI.SetActive(false);
-            
+
             characterMovement.inputDisabled = false;
         }
     }
@@ -299,5 +298,4 @@ public class GameState : MonoBehaviour
         Debug.LogWarning("Game Quit");
         Application.Quit();
     }
-    
 }
